@@ -173,9 +173,7 @@
       </div>
 
       <h3 class="text-left text-sm font-bold text-slate-300 mb-3">Détail des réponses :</h3>
-      <div id="recap-list" class="max-h-64 overflow-y-auto text-left space-y-2 pr-2 mb-6">
-        <!-- Généré dynamiquement -->
-      </div>
+      <div id="recap-list" class="max-h-64 overflow-y-auto text-left space-y-2 pr-2 mb-6"></div>
 
       <button onclick="restartQuiz()" class="krea-btn krea-btn-active w-full py-3 text-sm font-bold">
         Recommencer la série
@@ -224,7 +222,7 @@
     const DATA = [
       // PHOTOSHOP (30)
       { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
-      { app: 'photoshop', cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'n'], win: ['Control', 'Shift', 'n'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
+      { app: 'photoshop', cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'N'], win: ['Control', 'Shift', 'N'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
       { app: 'photoshop', cat: 'Calques', q: 'Fusionner les calques sélectionnés', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
       { app: 'photoshop', cat: 'Calques', q: 'Fusionner tous les calques visibles', mac: ['Meta', 'Shift', 'e'], win: ['Control', 'Shift', 'e'], labelMac: 'Cmd + Shift + E', labelWin: 'Ctrl + Shift + E' },
       { app: 'photoshop', cat: 'Calques', q: 'Créer ou rompre un masque d\'écrêtage', mac: ['Meta', 'Alt', 'g'], win: ['Control', 'Alt', 'g'], labelMac: 'Cmd + Option + G', labelWin: 'Ctrl + Alt + G' },
@@ -287,12 +285,12 @@
       { app: 'lightroom', cat: 'Masquage', q: 'Activer l\'outil Recadrage', mac: ['r'], win: ['r'], labelMac: 'R', labelWin: 'R' },
       { app: 'lightroom', cat: 'Masquage', q: 'Activer l\'outil Correction / Suppression des défauts', mac: ['q'], win: ['q'], labelMac: 'Q', labelWin: 'Q' },
       { app: 'lightroom', cat: 'Masquage', q: 'Activer le Filtre gradué (Linaire)', mac: ['m'], win: ['m'], labelMac: 'M', labelWin: 'M' },
-      { app: 'lightroom', cat: 'Masquage', q: 'Activer le Filtre radial', mac: ['Shift', 'm'], win: ['Shift', 'm'], labelMac: 'Shift + M', labelWin: 'Shift + M' },
+      { app: 'lightroom', cat: 'Masquage', q: 'Activer le Filtre radial', mac: ['Shift', 'M'], win: ['Shift', 'M'], labelMac: 'Shift + M', labelWin: 'Shift + M' },
 
-      { app: 'lightroom', cat: 'Édition', q: 'Copier les paramètres de développement', mac: ['Meta', 'Shift', 'c'], win: ['Control', 'Shift', 'c'], labelMac: 'Cmd + Shift + C', labelWin: 'Ctrl + Shift + C' },
-      { app: 'lightroom', cat: 'Édition', q: 'Coller les paramètres de développement', mac: ['Meta', 'Shift', 'v'], win: ['Control', 'Shift', 'v'], labelMac: 'Cmd + Shift + V', labelWin: 'Ctrl + Shift + V' },
-      { app: 'lightroom', cat: 'Édition', q: 'Réinitialiser tous les réglages de développement', mac: ['Meta', 'Shift', 'r'], win: ['Control', 'Shift', 'r'], labelMac: 'Cmd + Shift + R', labelWin: 'Ctrl + Shift + R' },
-      { app: 'lightroom', cat: 'Exportation', q: 'Ouvrir la fenêtre d\'Exportation', mac: ['Meta', 'Shift', 'e'], win: ['Control', 'Shift', 'e'], labelMac: 'Cmd + Shift + E', labelWin: 'Ctrl + Shift + E' }
+      { app: 'lightroom', cat: 'Édition', q: 'Copier les paramètres de développement', mac: ['Meta', 'Shift', 'C'], win: ['Control', 'Shift', 'C'], labelMac: 'Cmd + Shift + C', labelWin: 'Ctrl + Shift + C' },
+      { app: 'lightroom', cat: 'Édition', q: 'Coller les paramètres de développement', mac: ['Meta', 'Shift', 'V'], win: ['Control', 'Shift', 'V'], labelMac: 'Cmd + Shift + V', labelWin: 'Ctrl + Shift + V' },
+      { app: 'lightroom', cat: 'Édition', q: 'Réinitialiser tous les réglages de développement', mac: ['Meta', 'Shift', 'R'], win: ['Control', 'Shift', 'R'], labelMac: 'Cmd + Shift + R', labelWin: 'Ctrl + Shift + R' },
+      { app: 'lightroom', cat: 'Exportation', q: 'Ouvrir la fenêtre d\'Exportation', mac: ['Meta', 'Shift', 'E'], win: ['Control', 'Shift', 'E'], labelMac: 'Cmd + Shift + E', labelWin: 'Ctrl + Shift + E' }
     ];
 
     let currentApp = 'photoshop';
@@ -360,7 +358,6 @@
     function nextQuestion() {
       const items = getFilteredData();
       if (!currentQuestionAnswered) {
-        // Enregistre un échec si l'utilisateur saute la question
         historyResults.push({
           question: items[currentIndex].q,
           correct: false,
@@ -397,10 +394,15 @@
       `).join('');
     }
 
+    // Interception globale renforcée pour désactiver les raccourcis système Safari/Chrome
     window.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
       if (document.getElementById('quiz-view').classList.contains('hidden')) return;
 
-      if (e.metaKey || e.ctrlKey) e.preventDefault();
       pressedKeys.add(e.key);
       
       const items = getFilteredData();
@@ -442,7 +444,7 @@
       } else {
         feedbackEl.innerText = '';
       }
-    });
+    }, true);
 
     window.addEventListener('keyup', (e) => {
       pressedKeys.delete(e.key);
