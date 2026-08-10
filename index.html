@@ -57,6 +57,10 @@
       transition: all 0.2s;
       cursor: pointer;
     }
+    .level-btn:hover {
+      border-color: #f472b6;
+      color: #ffffff;
+    }
     .level-btn-active {
       background-color: #f472b6 !important;
       color: #0f172a !important;
@@ -88,10 +92,11 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-6">
 
-  <!-- Entête -->
+  <!-- Entête avec Logo Krea -->
   <header class="max-w-2xl w-full my-4">
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-3">
+        <!-- Logo Vectoriel Krea -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-14 h-14 drop-shadow-lg">
           <defs>
             <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -103,9 +108,10 @@
               <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3"/>
             </linearGradient>
           </defs>
+          <rect x="0" y="0" width="100" height="100" rx="22" fill="#0b0f19"/>
           <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#g2)" transform="rotate(-6 49 49)"/>
           <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#g1)"/>
-          <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">s</text>
+          <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">k</text>
           <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
         </svg>
 
@@ -134,11 +140,28 @@
       <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2.5 krea-btn text-sm font-bold">Lightroom</button>
     </div>
 
-    <!-- Choix du Niveau -->
+    <!-- Choix du Niveau avec Icones SVG Krea -->
     <div class="flex gap-2 mb-6 bg-[#0b0f19] p-1.5 rounded-xl border border-slate-800">
-      <button id="lvl-1" onclick="setLevel(1)" class="flex-1 py-2 level-btn level-btn-active">🌱 Élémentaire (20)</button>
-      <button id="lvl-2" onclick="setLevel(2)" class="flex-1 py-2 level-btn">⚡ Intermédiaire (20)</button>
-      <button id="lvl-3" onclick="setLevel(3)" class="flex-1 py-2 level-btn">🔥 Expert (20)</button>
+      <button id="lvl-1" onclick="setLevel(1)" class="flex-1 py-2 level-btn level-btn-active flex items-center justify-center gap-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2.4 7.2 7.6 2.4-7.6 2.4L12 22l-2.4-7.2-7.6-2.4 7.6-2.4z"/>
+        </svg>
+        <span>Élémentaire (20)</span>
+      </button>
+
+      <button id="lvl-2" onclick="setLevel(2)" class="flex-1 py-2 level-btn flex items-center justify-center gap-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+        <span>Intermédiaire (20)</span>
+      </button>
+
+      <button id="lvl-3" onclick="setLevel(3)" class="flex-1 py-2 level-btn flex items-center justify-center gap-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+        </svg>
+        <span>Expert (20)</span>
+      </button>
     </div>
 
     <!-- VUE QUIZ -->
@@ -206,7 +229,7 @@
 
   </main>
 
-  <!-- Footer Style Krea -->
+  <!-- Footer avec Lien Krea -->
   <footer class="text-center my-6 text-xs text-slate-400 flex flex-col items-center gap-3">
     <div class="flex items-center gap-2">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-6 h-6 opacity-80">
@@ -214,9 +237,10 @@
           <linearGradient id="gf1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8B5CF6"/><stop offset="100%" stop-color="#2563EB"/></linearGradient>
           <linearGradient id="gf2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#06B6D4" stop-opacity="0.6"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3"/></linearGradient>
         </defs>
+        <rect x="0" y="0" width="100" height="100" rx="22" fill="#0b0f19"/>
         <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#gf2)" transform="rotate(-6 49 49)"/>
         <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#gf1)"/>
-        <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">s</text>
+        <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">k</text>
         <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
       </svg>
       <p class="font-semibold text-slate-400">Shortcut — by Graphis Studio</p>
@@ -228,6 +252,7 @@
           <linearGradient id="gk1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8B5CF6"/><stop offset="100%" stop-color="#2563EB"/></linearGradient>
           <linearGradient id="gk2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#06B6D4" stop-opacity="0.6"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3"/></linearGradient>
         </defs>
+        <rect x="0" y="0" width="100" height="100" rx="22" fill="#0b0f19"/>
         <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#gk2)" transform="rotate(-6 49 49)"/>
         <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#gk1)"/>
         <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">k</text>
@@ -260,7 +285,7 @@
       { app: 'photoshop', lvl: 1, cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
       { app: 'photoshop', lvl: 1, cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
       { app: 'photoshop', lvl: 1, cat: 'Sélection', q: 'Tout sélectionner', mac: ['Meta', 'a'], win: ['Control', 'a'], labelMac: 'Cmd + A', labelWin: 'Ctrl + A' },
-      { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Ouvrir un fichier / une image', mac: ['Meta', 'o'], win: ['Control', 'o'], labelMac: 'Cmd + O', labelWin: 'Ctrl + O' },
+      { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Afficher / Masquer les règles', mac: ['Meta', 'r'], win: ['Control', 'r'], labelMac: 'Cmd + R', labelWin: 'Ctrl + R' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Enregistrer le document', mac: ['Meta', 's'], win: ['Control', 's'], labelMac: 'Cmd + S', labelWin: 'Ctrl + S' },
       { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0' },
       { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Afficher à la taille réelle (Zoom 100%)', mac: ['Meta', '1'], win: ['Control', '1'], labelMac: 'Cmd + 1', labelWin: 'Ctrl + 1' },
@@ -277,7 +302,6 @@
       { app: 'photoshop', lvl: 2, cat: 'Ajustements', q: 'Ouvrir le réglage des Courbes', mac: ['Meta', 'm'], win: ['Control', 'm'], labelMac: 'Cmd + M', labelWin: 'Ctrl + M' },
       { app: 'photoshop', lvl: 2, cat: 'Ajustements', q: 'Ouvrir le réglage Teinte / Saturation', mac: ['Meta', 'u'], win: ['Control', 'u'], labelMac: 'Cmd + U', labelWin: 'Ctrl + U' },
       { app: 'photoshop', lvl: 2, cat: 'Ajustements', q: 'Inverser les couleurs d\'un calque', mac: ['Meta', 'i'], win: ['Control', 'i'], labelMac: 'Cmd + I', labelWin: 'Ctrl + I' },
-      { app: 'photoshop', lvl: 2, cat: 'Affichage', q: 'Afficher / Masquer les règles', mac: ['Meta', 'r'], win: ['Control', 'r'], labelMac: 'Cmd + R', labelWin: 'Ctrl + R' },
       { app: 'photoshop', lvl: 2, cat: 'Affichage', q: 'Afficher / Masquer les repères', mac: ['Meta', ';'], win: ['Control', ';'], labelMac: 'Cmd + ;', labelWin: 'Ctrl + ;' },
       { app: 'photoshop', lvl: 2, cat: 'Édition', q: 'Ouvrir la fenêtre Remplir', mac: ['Shift', 'F5'], win: ['Shift', 'F5'], labelMac: 'Shift + F5', labelWin: 'Shift + F5' },
       { app: 'photoshop', lvl: 2, cat: 'Édition', q: 'Remplir avec la couleur de premier plan', mac: ['Alt', 'Backspace'], win: ['Alt', 'Backspace'], labelMac: 'Option + Delete', labelWin: 'Alt + Retour arrière' },
