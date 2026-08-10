@@ -3,58 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entraîneur de Raccourcis Adobe</title>
+  <title>Shortcut - Entraîneur de Raccourcis Adobe</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background-color: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
+    body { background-color: #0e1117; color: #fafafa; font-family: "Source Sans Pro", system-ui, sans-serif; }
+    .st-card { background-color: #262730; border: 1px solid #31333f; border-radius: 0.75rem; }
+    .st-btn-primary { background-color: #ff4b4b; color: white; border-radius: 0.5rem; font-weight: 600; transition: all 0.2s; }
+    .st-btn-primary:hover { background-color: #e03e3e; }
+    .st-btn-secondary { background-color: #31333f; color: #fafafa; border-radius: 0.5rem; }
+    .st-btn-secondary:hover { background-color: #3f4152; }
     .kbd {
-      background: #334155; border: 1px solid #475569; border-bottom-width: 3px;
-      border-radius: 0.375rem; padding: 0.25rem 0.6rem; font-family: monospace;
-      font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      background: #1e293b; border: 1px solid #475569; border-bottom-width: 3px;
+      border-radius: 0.375rem; padding: 0.3rem 0.75rem; font-family: monospace;
+      font-weight: bold; color: #38bdf8; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-  <div class="max-w-2xl w-full bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-6">
-    <!-- En-tête / Choix du logiciel -->
-    <div class="flex justify-between items-center mb-6">
-      <div class="flex space-x-2">
-        <button id="btn-ps" onclick="setApp('photoshop')" class="px-4 py-2 rounded-lg font-bold bg-blue-600 text-white">Photoshop</button>
-        <button id="btn-lr" onclick="setApp('lightroom')" class="px-4 py-2 rounded-lg font-bold bg-slate-700 text-slate-300">Lightroom</button>
+  <div class="max-w-2xl w-full st-card p-6 md:p-8 shadow-2xl">
+    
+    <!-- Header Streamlit Style avec Logo -->
+    <div class="flex items-center justify-between border-b border-slate-700 pb-5 mb-6">
+      <div class="flex items-center space-x-3">
+        <!-- Logo Shortcut -->
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-sky-400 flex items-center justify-center font-black text-xl text-white shadow-lg">
+          S⌘
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">Shortcut</h1>
+          <p class="text-xs text-slate-400">Raccourcis Photoshop & Lightroom</p>
+        </div>
       </div>
-      <div class="flex space-x-2 text-sm">
-        <select id="os-select" onchange="render()" class="bg-slate-700 text-slate-200 rounded px-2 py-1 border border-slate-600">
-          <option value="mac">macOS (Cmd ⌘)</option>
-          <option value="win">Windows (Ctrl ⌃)</option>
-        </select>
-      </div>
+
+      <!-- Sélecteur OS -->
+      <select id="os-select" onchange="render()" class="bg-[#31333f] text-slate-200 text-xs rounded-md px-3 py-1.5 border border-slate-600 focus:outline-none">
+        <option value="mac">macOS (Cmd ⌘)</option>
+        <option value="win">Windows (Ctrl ⌃)</option>
+      </select>
     </div>
 
-    <!-- Zone de question -->
-    <div class="text-center my-8">
-      <span id="category-badge" class="text-xs uppercase tracking-wider bg-slate-700 text-slate-300 px-3 py-1 rounded-full">Catégorie</span>
-      <h1 id="question-text" class="text-2xl font-extrabold mt-4 text-white">Question ici...</h1>
+    <!-- Choix du Logiciel (Onglets Streamlit) -->
+    <div class="flex space-x-2 bg-[#1e222d] p-1.5 rounded-lg mb-8">
+      <button id="btn-ps" onclick="setApp('photoshop')" class="flex-1 py-2 rounded-md font-medium text-sm transition-all bg-[#262730] text-white shadow-sm">Photoshop</button>
+      <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2 rounded-md font-medium text-sm transition-all text-slate-400 hover:text-white">Lightroom</button>
     </div>
 
-    <!-- Zone d'interaction clavier -->
-    <div id="drop-zone" class="bg-slate-900 border-2 border-dashed border-slate-600 rounded-lg p-6 text-center my-6 min-h-[100px] flex flex-col items-center justify-center">
-      <p class="text-sm text-slate-400 mb-3">Exécutez le raccourci sur votre clavier :</p>
-      <div id="keys-pressed" class="flex gap-2 min-h-[36px] items-center">
+    <!-- Zone de Question -->
+    <div class="text-center my-6">
+      <span id="category-badge" class="text-[10px] font-semibold uppercase tracking-wider bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 px-3 py-1 rounded-full">Catégorie</span>
+      <h2 id="question-text" class="text-2xl font-bold mt-4 text-slate-100">Question ici...</h2>
+    </div>
+
+    <!-- Zone de Détection Clavier -->
+    <div id="drop-zone" class="bg-[#0e1117] border-2 border-dashed border-slate-700 rounded-xl p-8 text-center my-6 min-h-[120px] flex flex-col items-center justify-center transition-all">
+      <p class="text-xs text-slate-400 mb-3">Exécutez le raccourci directement sur votre clavier :</p>
+      <div id="keys-pressed" class="flex gap-2 min-h-[38px] items-center">
         <span class="text-slate-500 italic text-sm">En attente de vos touches...</span>
       </div>
     </div>
 
-    <!-- Feedback / Boutons -->
-    <div class="flex justify-between items-center mt-6">
-      <button onclick="toggleHint()" class="text-xs text-slate-400 underline hover:text-slate-200">Voir la réponse</button>
+    <!-- Pied de Carte / Actions -->
+    <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-700/50">
+      <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-slate-200 underline">Afficher la réponse</button>
       <div id="feedback" class="font-bold text-sm"></div>
-      <button onclick="nextQuestion()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium text-sm">Question suivante ➔</button>
+      <button onclick="nextQuestion()" class="st-btn-primary px-5 py-2.5 text-sm flex items-center space-x-2">
+        <span>Suivant</span>
+        <span>➔</span>
+      </button>
     </div>
     
-    <div id="hint-box" class="hidden mt-4 p-3 bg-slate-700/50 rounded border border-slate-600 text-center text-sm">
-      Réponse : <span id="hint-text" class="font-mono font-bold text-amber-400"></span>
+    <!-- Boîte de Réponse / Indice -->
+    <div id="hint-box" class="hidden mt-4 p-4 bg-[#1e222d] rounded-lg border border-slate-700 text-center text-sm">
+      Raccourci attendu : <span id="hint-text" class="font-mono font-bold text-sky-400 ml-2"></span>
     </div>
+
   </div>
 
   <script>
@@ -72,8 +95,8 @@
 
     function setApp(app) {
       currentApp = app;
-      document.getElementById('btn-ps').className = app === 'photoshop' ? 'px-4 py-2 rounded-lg font-bold bg-blue-600 text-white' : 'px-4 py-2 rounded-lg font-bold bg-slate-700 text-slate-300';
-      document.getElementById('btn-lr').className = app === 'lightroom' ? 'px-4 py-2 rounded-lg font-bold bg-blue-600 text-white' : 'px-4 py-2 rounded-lg font-bold bg-slate-700 text-slate-300';
+      document.getElementById('btn-ps').className = app === 'photoshop' ? 'flex-1 py-2 rounded-md font-medium text-sm transition-all bg-[#262730] text-white shadow-sm' : 'flex-1 py-2 rounded-md font-medium text-sm transition-all text-slate-400 hover:text-white';
+      document.getElementById('btn-lr').className = app === 'lightroom' ? 'flex-1 py-2 rounded-md font-medium text-sm transition-all bg-[#262730] text-white shadow-sm' : 'flex-1 py-2 rounded-md font-medium text-sm transition-all text-slate-400 hover:text-white';
       currentIndex = 0;
       render();
     }
@@ -112,7 +135,6 @@
 
     window.addEventListener('keydown', (e) => {
       if (e.metaKey || e.ctrlKey) e.preventDefault();
-      
       pressedKeys.add(e.key);
       
       const items = getFilteredData();
@@ -125,7 +147,7 @@
 
       const isCorrect = expectedKeys.length === pressedKeys.size && expectedKeys.every(k => pressedKeys.has(k) || pressedKeys.has(k.toLowerCase()));
       if (isCorrect) {
-        document.getElementById('feedback').innerHTML = '<span class="text-emerald-400">Bravo ! Raccourci correct.</span>';
+        document.getElementById('feedback').innerHTML = '<span class="text-emerald-400 font-bold">Bravo !</span>';
       }
     });
 
@@ -137,3 +159,4 @@
   </script>
 </body>
 </html>
+```http://googleusercontent.com/image_generation_content/614
