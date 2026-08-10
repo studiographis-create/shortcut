@@ -76,7 +76,6 @@
   <header class="max-w-2xl w-full my-4">
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <!-- Logo Shortcut HD SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-14 h-14 drop-shadow-lg">
           <defs>
             <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -119,33 +118,68 @@
       <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2.5 krea-btn text-sm font-bold">Lightroom (30)</button>
     </div>
 
-    <!-- Zone de Question -->
-    <div class="text-center my-6">
-      <span id="category-badge" class="cat-badge" style="background-color: #38BDF8;">CALQUES</span>
-      <h2 id="question-text" class="text-2xl font-black mt-3 text-white">Dupliquer le calque sélectionné</h2>
-    </div>
+    <!-- VUE QUIZ -->
+    <div id="quiz-view">
+      <div class="flex justify-between items-center text-xs text-slate-400 font-bold mb-2">
+        <span id="progress-text">Question 1 / 30</span>
+        <span id="score-live-text" class="text-emerald-400">Score : 0</span>
+      </div>
 
-    <!-- Zone Clavier Interactif -->
-    <div id="drop-zone" class="bg-[#0b0f19] border-2 border-dashed border-slate-700/80 rounded-xl p-8 text-center my-6 min-h-[120px] flex flex-col items-center justify-center">
-      <p class="text-xs text-slate-400 font-medium mb-3">Exécutez le raccourci sur votre clavier :</p>
-      <div id="keys-pressed" class="flex gap-2 min-h-[42px] items-center">
-        <span class="text-slate-500 italic text-sm">En attente de vos touches...</span>
+      <!-- Zone de Question -->
+      <div class="text-center my-4">
+        <span id="category-badge" class="cat-badge" style="background-color: #38BDF8;">CALQUES</span>
+        <h2 id="question-text" class="text-2xl font-black mt-3 text-white">Dupliquer le calque sélectionné</h2>
+      </div>
+
+      <!-- Zone Clavier Interactif -->
+      <div id="drop-zone" class="bg-[#0b0f19] border-2 border-dashed border-slate-700/80 rounded-xl p-8 text-center my-6 min-h-[120px] flex flex-col items-center justify-center">
+        <p class="text-xs text-slate-400 font-medium mb-3">Exécutez le raccourci sur votre clavier :</p>
+        <div id="keys-pressed" class="flex gap-2 min-h-[42px] items-center">
+          <span class="text-slate-500 italic text-sm">En attente de vos touches...</span>
+        </div>
+      </div>
+
+      <!-- Navigation & Feedback -->
+      <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-700/50">
+        <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-pink-400 underline font-semibold transition-colors">Afficher la réponse</button>
+        <div id="feedback" class="font-bold text-sm min-h-[24px]"></div>
+        <button onclick="nextQuestion()" class="krea-btn px-5 py-2.5 text-sm flex items-center space-x-2">
+          <span>Suivant</span>
+          <span>➔</span>
+        </button>
+      </div>
+      
+      <!-- Indice / Réponse -->
+      <div id="hint-box" class="hidden mt-4 p-4 bg-[#0b0f19] rounded-lg border border-slate-700 text-center text-sm">
+        Raccourci attendu : <span id="hint-text" class="font-mono font-bold text-pink-400 ml-2"></span>
       </div>
     </div>
 
-    <!-- Navigation & Feedback -->
-    <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-700/50">
-      <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-pink-400 underline font-semibold transition-colors">Afficher la réponse</button>
-      <div id="feedback" class="font-bold text-sm min-h-[24px]"></div>
-      <button onclick="nextQuestion()" class="krea-btn px-5 py-2.5 text-sm flex items-center space-x-2">
-        <span>Suivant</span>
-        <span>➔</span>
+    <!-- VUE SCORE / RÉCAPITULATIF FIN DE SÉRIE -->
+    <div id="result-view" class="hidden text-center py-4">
+      <h2 class="text-3xl font-black text-white mb-2">Série terminée ! 🎉</h2>
+      <p class="text-slate-400 text-sm mb-6">Voici le récapitulatif de vos performances :</p>
+
+      <div class="bg-[#0b0f19] rounded-xl p-6 mb-6 border border-slate-800 flex justify-around items-center">
+        <div>
+          <p class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Score Final</p>
+          <p id="final-score" class="text-3xl font-black text-emerald-400">0 / 30</p>
+        </div>
+        <div class="h-10 w-px bg-slate-800"></div>
+        <div>
+          <p class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Taux de réussite</p>
+          <p id="final-percent" class="text-3xl font-black text-sky-400">0%</p>
+        </div>
+      </div>
+
+      <h3 class="text-left text-sm font-bold text-slate-300 mb-3">Détail des réponses :</h3>
+      <div id="recap-list" class="max-h-64 overflow-y-auto text-left space-y-2 pr-2 mb-6">
+        <!-- Généré dynamiquement -->
+      </div>
+
+      <button onclick="restartQuiz()" class="krea-btn krea-btn-active w-full py-3 text-sm font-bold">
+        Recommencer la série
       </button>
-    </div>
-    
-    <!-- Indice / Réponse -->
-    <div id="hint-box" class="hidden mt-4 p-4 bg-[#0b0f19] rounded-lg border border-slate-700 text-center text-sm">
-      Raccourci attendu : <span id="hint-text" class="font-mono font-bold text-pink-400 ml-2"></span>
     </div>
 
   </main>
@@ -188,7 +222,7 @@
     };
 
     const DATA = [
-      // ----------------PHOTOSHOP (30) ----------------
+      // PHOTOSHOP (30)
       { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
       { app: 'photoshop', cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'n'], win: ['Control', 'Shift', 'n'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
       { app: 'photoshop', cat: 'Calques', q: 'Fusionner les calques sélectionnés', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
@@ -225,7 +259,7 @@
       { app: 'photoshop', cat: 'Édition', q: 'Ouvrir la fenêtre Remplir', mac: ['Shift', 'F5'], win: ['Shift', 'F5'], labelMac: 'Shift + F5', labelWin: 'Shift + F5' },
       { app: 'photoshop', cat: 'Édition', q: 'Activer / Désactiver le Mode Masque rapide', mac: ['q'], win: ['q'], labelMac: 'Q', labelWin: 'Q' },
 
-      // ---------------- LIGHTROOM (30) ----------------
+      // LIGHTROOM (30)
       { app: 'lightroom', cat: 'Bibliothèque', q: 'Marquer la photo comme retenue (Fanion vert)', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
       { app: 'lightroom', cat: 'Bibliothèque', q: 'Rejeter la photo (Croix rouge)', mac: ['x'], win: ['x'], labelMac: 'X', labelWin: 'X' },
       { app: 'lightroom', cat: 'Bibliothèque', q: 'Supprimer le fanion d\'évaluation', mac: ['u'], win: ['u'], labelMac: 'U', labelWin: 'U' },
@@ -264,24 +298,44 @@
     let currentApp = 'photoshop';
     let currentIndex = 0;
     let pressedKeys = new Set();
+    let currentQuestionAnswered = false;
+    let historyResults = [];
 
     function setApp(app) {
       currentApp = app;
       document.getElementById('btn-ps').className = app === 'photoshop' ? 'flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold' : 'flex-1 py-2.5 krea-btn text-sm font-bold';
       document.getElementById('btn-lr').className = app === 'lightroom' ? 'flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold' : 'flex-1 py-2.5 krea-btn text-sm font-bold';
-      currentIndex = 0;
-      render();
+      restartQuiz();
     }
 
     function getFilteredData() {
       return DATA.filter(item => item.app === currentApp);
     }
 
+    function restartQuiz() {
+      currentIndex = 0;
+      historyResults = [];
+      document.getElementById('quiz-view').classList.remove('hidden');
+      document.getElementById('result-view').classList.add('hidden');
+      render();
+    }
+
     function render() {
       const items = getFilteredData();
       if (!items.length) return;
-      const item = items[currentIndex % items.length];
+
+      if (currentIndex >= items.length) {
+        showResults();
+        return;
+      }
+
+      currentQuestionAnswered = false;
+      const item = items[currentIndex];
       const os = document.getElementById('os-select').value;
+
+      document.getElementById('progress-text').innerText = `Question ${currentIndex + 1} / ${items.length}`;
+      const scoreSuccessCount = historyResults.filter(r => r.correct).length;
+      document.getElementById('score-live-text').innerText = `Score : ${scoreSuccessCount}`;
 
       const badge = document.getElementById('category-badge');
       badge.innerText = item.cat;
@@ -304,16 +358,53 @@
     }
 
     function nextQuestion() {
+      const items = getFilteredData();
+      if (!currentQuestionAnswered) {
+        // Enregistre un échec si l'utilisateur saute la question
+        historyResults.push({
+          question: items[currentIndex].q,
+          correct: false,
+          expected: document.getElementById('os-select').value === 'mac' ? items[currentIndex].labelMac : items[currentIndex].labelWin
+        });
+      }
       currentIndex++;
       render();
     }
 
+    function showResults() {
+      const items = getFilteredData();
+      document.getElementById('quiz-view').classList.add('hidden');
+      document.getElementById('result-view').classList.remove('hidden');
+
+      const successCount = historyResults.filter(r => r.correct).length;
+      const totalCount = items.length;
+      const percentage = Math.round((successCount / totalCount) * 100);
+
+      document.getElementById('final-score').innerText = `${successCount} / ${totalCount}`;
+      document.getElementById('final-percent').innerText = `${percentage}%`;
+
+      const listContainer = document.getElementById('recap-list');
+      listContainer.innerHTML = historyResults.map((r, i) => `
+        <div class="p-3 bg-[#0b0f19] border ${r.correct ? 'border-emerald-500/30' : 'border-rose-500/30'} rounded-lg flex justify-between items-center text-xs">
+          <div>
+            <p class="font-bold text-slate-200">${i + 1}. ${r.question}</p>
+            <p class="text-slate-400 mt-0.5">Attendu : <span class="font-mono font-bold text-pink-400">${r.expected}</span></p>
+          </div>
+          <span class="${r.correct ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' : 'bg-rose-500/20 text-rose-400 border-rose-500/40'} border font-bold px-2.5 py-1 rounded-full text-[10px]">
+            ${r.correct ? '✓ Réussi' : '✕ Échoué'}
+          </span>
+        </div>
+      `).join('');
+    }
+
     window.addEventListener('keydown', (e) => {
+      if (document.getElementById('quiz-view').classList.contains('hidden')) return;
+
       if (e.metaKey || e.ctrlKey) e.preventDefault();
       pressedKeys.add(e.key);
       
       const items = getFilteredData();
-      const item = items[currentIndex % items.length];
+      const item = items[currentIndex];
       const os = document.getElementById('os-select').value;
       const expectedKeys = os === 'mac' ? item.mac : item.win;
 
@@ -330,8 +421,24 @@
 
       if (isCorrect) {
         feedbackEl.innerHTML = '<span class="text-emerald-400 font-bold">Bravo ! Raccourci correct.</span>';
+        if (!currentQuestionAnswered) {
+          currentQuestionAnswered = true;
+          historyResults.push({
+            question: item.q,
+            correct: true,
+            expected: os === 'mac' ? item.labelMac : item.labelWin
+          });
+        }
       } else if (hasWrongKey || pressedKeys.size >= expectedKeys.length) {
         feedbackEl.innerHTML = '<span class="text-rose-400 font-bold">Raccourci incorrect !</span>';
+        if (!currentQuestionAnswered) {
+          currentQuestionAnswered = true;
+          historyResults.push({
+            question: item.q,
+            correct: false,
+            expected: os === 'mac' ? item.labelMac : item.labelWin
+          });
+        }
       } else {
         feedbackEl.innerText = '';
       }
