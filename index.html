@@ -72,7 +72,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-6">
 
-  <!-- Entête avec Logo Krea Style -->
+  <!-- Entête avec Logo Style Krea -->
   <header class="max-w-2xl w-full my-4">
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-3">
@@ -136,7 +136,7 @@
     <!-- Navigation & Feedback -->
     <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-700/50">
       <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-pink-400 underline font-semibold transition-colors">Afficher la réponse</button>
-      <div id="feedback" class="font-bold text-sm"></div>
+      <div id="feedback" class="font-bold text-sm min-h-[24px]"></div>
       <button onclick="nextQuestion()" class="krea-btn px-5 py-2.5 text-sm flex items-center space-x-2">
         <span>Suivant</span>
         <span>➔</span>
@@ -150,36 +150,51 @@
 
   </main>
 
-  <!-- Footer Krea Style -->
+  <!-- Footer Style Krea -->
   <footer class="text-center my-6 text-xs text-slate-400">
-    <div class="flex justify-center items-center mb-2">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-8 h-8 opacity-80">
-        <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#g2)" transform="rotate(-6 49 49)"/>
-        <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#g1)"/>
-        <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">s</text>
-        <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
-      </svg>
-    </div>
     <p class="font-semibold text-slate-400">Shortcut — by Graphis Studio</p>
   </footer>
 
   <script>
     const CATEGORY_COLORS = {
-      'Photoshop': '#38BDF8',
-      'Lightroom': '#60A5FA',
       'Calques': '#38BDF8',
       'Sélection': '#EC4899',
       'Affichage': '#10B981',
-      'Développement': '#60A5FA',
-      'Bibliothèque': '#A855F7'
+      'Outils': '#F59E0B',
+      'Bibliothèque': '#A855F7',
+      'Développement': '#60A5FA'
     };
 
     const DATA = [
+      // PHOTOSHOP - Calques
       { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
+      { app: 'photoshop', cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'N'], win: ['Control', 'Shift', 'N'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
+      { app: 'photoshop', cat: 'Calques', q: 'Fusionner les calques sélectionnés', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
+      
+      // PHOTOSHOP - Sélection
       { app: 'photoshop', cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
+      { app: 'photoshop', cat: 'Sélection', q: 'Inverser la sélection', mac: ['Meta', 'Shift', 'i'], win: ['Control', 'Shift', 'i'], labelMac: 'Cmd + Shift + I', labelWin: 'Ctrl + Shift + I' },
+      { app: 'photoshop', cat: 'Sélection', q: 'Tout sélectionner', mac: ['Meta', 'a'], win: ['Control', 'a'], labelMac: 'Cmd + A', labelWin: 'Ctrl + A' },
+
+      // PHOTOSHOP - Outils & Affichage
+      { app: 'photoshop', cat: 'Outils', q: 'Transformation libre', mac: ['Meta', 't'], win: ['Control', 't'], labelMac: 'Cmd + T', labelWin: 'Ctrl + T' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Pinceau', mac: ['b'], win: ['b'], labelMac: 'B', labelWin: 'B' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Gomme', mac: ['e'], win: ['e'], labelMac: 'E', labelWin: 'E' },
       { app: 'photoshop', cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0' },
-      { app: 'lightroom', cat: 'Développement', q: 'Passer en mode Avant / Après', mac: ['\\'], win: ['\\'], labelMac: '\\', labelWin: '\\' },
-      { app: 'lightroom', cat: 'Bibliothèque', q: 'Marquer la photo comme retenue (Fanion)', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
+      { app: 'photoshop', cat: 'Affichage', q: 'Afficher à la taille réelle (Zoom 100%)', mac: ['Meta', '1'], win: ['Control', '1'], labelMac: 'Cmd + 1', labelWin: 'Ctrl + 1' },
+
+      // LIGHTROOM - Bibliothèque
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Marquer la photo comme retenue (Fanion vert)', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Rejeter la photo (Croix rouge)', mac: ['x'], win: ['x'], labelMac: 'X', labelWin: 'X' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Afficher le mode Grille', mac: ['g'], win: ['g'], labelMac: 'G', labelWin: 'G' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Extinction des feux (Masquer l\'interface)', mac: ['l'], win: ['l'], labelMac: 'L', labelWin: 'L' },
+
+      // LIGHTROOM - Développement
+      { app: 'lightroom', cat: 'Développement', q: 'Passer au module Développement', mac: ['d'], win: ['d'], labelMac: 'D', labelWin: 'D' },
+      { app: 'lightroom', cat: 'Développement', q: 'Passer en mode comparaison Avant / Après', mac: ['\\'], win: ['\\'], labelMac: '\\', labelWin: '\\' },
+      { app: 'lightroom', cat: 'Développement', q: 'Convertir la photo en Noir & Blanc', mac: ['v'], win: ['v'], labelMac: 'V', labelWin: 'V' },
+      { app: 'lightroom', cat: 'Développement', q: 'Afficher / Masquer les avertissements d\'écrêtage', mac: ['j'], win: ['j'], labelMac: 'J', labelWin: 'J' },
+      { app: 'lightroom', cat: 'Développement', q: 'Activer l\'outil Pinceau de retouche', mac: ['k'], win: ['k'], labelMac: 'K', labelWin: 'K' }
     ];
 
     let currentApp = 'photoshop';
@@ -241,9 +256,21 @@
       const container = document.getElementById('keys-pressed');
       container.innerHTML = Array.from(pressedKeys).map(k => `<span class="kbd">${k.toUpperCase()}</span>`).join(' + ');
 
-      const isCorrect = expectedKeys.length === pressedKeys.size && expectedKeys.every(k => pressedKeys.has(k) || pressedKeys.has(k.toLowerCase()));
+      // Normalisation pour comparaison insensible à la casse
+      const expectedNormalized = expectedKeys.map(k => k.toLowerCase());
+      const pressedArray = Array.from(pressedKeys).map(k => k.toLowerCase());
+
+      const isCorrect = expectedKeys.length === pressedKeys.size && expectedNormalized.every(k => pressedArray.includes(k));
+      const hasWrongKey = pressedArray.some(k => !expectedNormalized.includes(k));
+
+      const feedbackEl = document.getElementById('feedback');
+
       if (isCorrect) {
-        document.getElementById('feedback').innerHTML = '<span class="text-emerald-400 font-bold">Bravo !</span>';
+        feedbackEl.innerHTML = '<span class="text-emerald-400 font-bold">Bravo ! Raccourci correct.</span>';
+      } else if (hasWrongKey || pressedKeys.size >= expectedKeys.length) {
+        feedbackEl.innerHTML = '<span class="text-rose-400 font-bold">Raccourci incorrect !</span>';
+      } else {
+        feedbackEl.innerText = '';
       }
     });
 
