@@ -285,13 +285,13 @@
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer l\'outil Plume', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer l\'outil Pot de peinture / Dégradé', mac: ['g'], win: ['g'], labelMac: 'G', labelWin: 'G' },
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer l\'outil Recadrage', mac: ['c'], win: ['c'], labelMac: 'C', labelWin: 'C' },
+      { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer l\'outil Loupe (Zoom)', mac: ['z'], win: ['z'], labelMac: 'Z', labelWin: 'Z' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Annuler la dernière action', mac: ['Meta', 'z'], win: ['Control', 'z'], labelMac: 'Cmd + Z', labelWin: 'Ctrl + Z' },
       { app: 'photoshop', lvl: 1, cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
       { app: 'photoshop', lvl: 1, cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
       { app: 'photoshop', lvl: 1, cat: 'Sélection', q: 'Tout sélectionner', mac: ['Meta', 'a'], win: ['Control', 'a'], labelMac: 'Cmd + A', labelWin: 'Ctrl + A' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Enregistrer le document', mac: ['Meta', 's'], win: ['Control', 's'], labelMac: 'Cmd + S', labelWin: 'Ctrl + S' },
       { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0' },
-      { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Afficher à la taille réelle (Zoom 100%)', mac: ['Meta', '1'], win: ['Control', '1'], labelMac: 'Cmd + 1', labelWin: 'Ctrl + 1' },
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Basculer les couleurs de premier / arrière plan', mac: ['x'], win: ['x'], labelMac: 'X', labelWin: 'X' },
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Réinitialiser les couleurs par défaut (Noir/Blanc)', mac: ['d'], win: ['d'], labelMac: 'D', labelWin: 'D' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Activer / Désactiver le Mode Masque rapide', mac: ['q'], win: ['q'], labelMac: 'Q', labelWin: 'Q' },
@@ -384,7 +384,7 @@
       { app: 'lightroom', lvl: 2, cat: 'Bibliothèque', q: 'Désélectionner toutes les photos', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
       { app: 'lightroom', lvl: 2, cat: 'Bibliothèque', q: 'Ouvrir les photos dans Photoshop', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
 
-      // NIV 3 - Expert (Cmd + H remplacé par Cmd + Shift + H pour la sécurité du navigateur)
+      // NIV 3 - Expert
       { app: 'lightroom', lvl: 3, cat: 'Édition', q: 'Copier les paramètres du cliché précédent', mac: ['Meta', 'Alt', 'v'], win: ['Control', 'Alt', 'v'], labelMac: 'Cmd + Option + V', labelWin: 'Ctrl + Alt + V' },
       { app: 'lightroom', lvl: 3, cat: 'Masquage', q: 'Activer le masque d\'IA (Sujet / Ciel)', mac: ['n'], win: ['n'], labelMac: 'N', labelWin: 'N' },
       { app: 'lightroom', lvl: 3, cat: 'Développement', q: 'Basculer l\'incrustation de masque', mac: ['o'], win: ['o'], labelMac: 'O', labelWin: 'O' },
@@ -590,11 +590,13 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      // Interception renforcée des raccourcis navigateur/système
+      // Interception globale des raccourcis système gênants (F5, Cmd+R, Cmd+N, Cmd+T, Cmd+H, Cmd+1 à 9)
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
       const keyLower = e.key.toLowerCase();
 
-      if (e.key === 'F5' || (isCmdOrCtrl && (keyLower === 'r' || keyLower === 'n' || keyLower === 't' || keyLower === 'h'))) {
+      const isDigit = /^[1-9]$/.test(e.key);
+
+      if (e.key === 'F5' || (isCmdOrCtrl && (keyLower === 'r' || keyLower === 'n' || keyLower === 't' || keyLower === 'h' || isDigit))) {
         e.preventDefault();
         e.stopPropagation();
       }
