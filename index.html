@@ -3,84 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shortcut - Entraîneur de Raccourcis Adobe</title>
+  <title>Shortcut — L'Entraîneur de Raccourcis Adobe</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background-color: #0e1117; color: #fafafa; font-family: "Source Sans Pro", system-ui, sans-serif; }
-    .st-card { background-color: #262730; border: 1px solid #31333f; border-radius: 0.75rem; }
-    .st-btn-primary { background-color: #ff4b4b; color: white; border-radius: 0.5rem; font-weight: 600; transition: all 0.2s; }
-    .st-btn-primary:hover { background-color: #e03e3e; }
-    .st-btn-secondary { background-color: #31333f; color: #fafafa; border-radius: 0.5rem; }
-    .st-btn-secondary:hover { background-color: #3f4152; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #0b0f19;
+      background-image: 
+        radial-gradient(at 15% 10%, rgba(139, 92, 246, 0.22) 0px, transparent 40%),
+        radial-gradient(at 85% 5%, rgba(37, 99, 235, 0.20) 0px, transparent 45%),
+        radial-gradient(at 50% 18%, rgba(244, 114, 182, 0.15) 0px, transparent 40%),
+        radial-gradient(at 70% 25%, rgba(6, 182, 212, 0.12) 0px, transparent 35%);
+      background-repeat: no-repeat;
+      color: #f1f5f9;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    
+    .krea-card {
+      background-color: #161e2e;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .krea-btn {
+      background-color: rgba(30, 41, 59, 0.85);
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+    .krea-btn:hover {
+      border-color: #F472B6;
+      color: #F472B6;
+      background-color: rgba(30, 41, 59, 0.95);
+    }
+
+    .krea-btn-active {
+      background: linear-gradient(135deg, #8B5CF6 0%, #2563EB 100%) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+    }
+
+    .cat-badge {
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      color: #0f172a;
+      display: inline-block;
+    }
+
     .kbd {
-      background: #1e293b; border: 1px solid #475569; border-bottom-width: 3px;
-      border-radius: 0.375rem; padding: 0.3rem 0.75rem; font-family: monospace;
-      font-weight: bold; color: #38bdf8; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      background: #0b0f19;
+      border: 1px solid #334155;
+      border-bottom-width: 3px;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      font-family: monospace;
+      font-weight: bold;
+      color: #38bdf8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
+<body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-6">
 
-  <div class="max-w-2xl w-full st-card p-6 md:p-8 shadow-2xl">
-    
-    <!-- Header Streamlit Style avec Logo -->
-    <div class="flex items-center justify-between border-b border-slate-700 pb-5 mb-6">
+  <!-- Entête avec Logo Krea Style -->
+  <header class="max-w-2xl w-full my-4">
+    <div class="flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <!-- Logo Shortcut -->
-        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-sky-400 flex items-center justify-center font-black text-xl text-white shadow-lg">
-          S⌘
-        </div>
+        <!-- Logo Shortcut HD SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-14 h-14 drop-shadow-lg">
+          <defs>
+            <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8B5CF6"/>
+              <stop offset="100%" stop-color="#2563EB"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#g2)" transform="rotate(-6 49 49)"/>
+          <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#g1)"/>
+          <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">s</text>
+          <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
+        </svg>
+
         <div>
-          <h1 class="text-xl font-bold tracking-tight">Shortcut</h1>
-          <p class="text-xs text-slate-400">Raccourcis Photoshop & Lightroom</p>
+          <h1 class="text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            Shortcut <span class="text-xs px-2 py-0.5 rounded-full border border-pink-400/40 text-pink-400 font-bold">PRO</span>
+          </h1>
+          <p class="text-xs text-slate-400 font-medium">L'entraîneur de raccourcis Photoshop & Lightroom</p>
         </div>
       </div>
 
       <!-- Sélecteur OS -->
-      <select id="os-select" onchange="render()" class="bg-[#31333f] text-slate-200 text-xs rounded-md px-3 py-1.5 border border-slate-600 focus:outline-none">
+      <select id="os-select" onchange="render()" class="bg-[#1e293b] text-slate-200 text-xs font-bold rounded-lg px-3 py-2 border border-slate-700 focus:outline-none">
         <option value="mac">macOS (Cmd ⌘)</option>
         <option value="win">Windows (Ctrl ⌃)</option>
       </select>
     </div>
+  </header>
 
-    <!-- Choix du Logiciel (Onglets Streamlit) -->
-    <div class="flex space-x-2 bg-[#1e222d] p-1.5 rounded-lg mb-8">
-      <button id="btn-ps" onclick="setApp('photoshop')" class="flex-1 py-2 rounded-md font-medium text-sm transition-all bg-[#262730] text-white shadow-sm">Photoshop</button>
-      <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2 rounded-md font-medium text-sm transition-all text-slate-400 hover:text-white">Lightroom</button>
+  <!-- Application Principale -->
+  <main class="max-w-2xl w-full krea-card p-6 md:p-8 my-auto">
+    
+    <!-- Choix du Logiciel -->
+    <div class="flex gap-3 mb-6">
+      <button id="btn-ps" onclick="setApp('photoshop')" class="flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold">Photoshop</button>
+      <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2.5 krea-btn text-sm font-bold">Lightroom</button>
     </div>
 
     <!-- Zone de Question -->
     <div class="text-center my-6">
-      <span id="category-badge" class="text-[10px] font-semibold uppercase tracking-wider bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 px-3 py-1 rounded-full">Catégorie</span>
-      <h2 id="question-text" class="text-2xl font-bold mt-4 text-slate-100">Question ici...</h2>
+      <span id="category-badge" class="cat-badge" style="background-color: #38BDF8;">CALQUES</span>
+      <h2 id="question-text" class="text-2xl font-black mt-3 text-white">Dupliquer le calque sélectionné</h2>
     </div>
 
-    <!-- Zone de Détection Clavier -->
-    <div id="drop-zone" class="bg-[#0e1117] border-2 border-dashed border-slate-700 rounded-xl p-8 text-center my-6 min-h-[120px] flex flex-col items-center justify-center transition-all">
-      <p class="text-xs text-slate-400 mb-3">Exécutez le raccourci directement sur votre clavier :</p>
-      <div id="keys-pressed" class="flex gap-2 min-h-[38px] items-center">
+    <!-- Zone Clavier Interactif -->
+    <div id="drop-zone" class="bg-[#0b0f19] border-2 border-dashed border-slate-700/80 rounded-xl p-8 text-center my-6 min-h-[120px] flex flex-col items-center justify-center">
+      <p class="text-xs text-slate-400 font-medium mb-3">Exécutez le raccourci sur votre clavier :</p>
+      <div id="keys-pressed" class="flex gap-2 min-h-[42px] items-center">
         <span class="text-slate-500 italic text-sm">En attente de vos touches...</span>
       </div>
     </div>
 
-    <!-- Pied de Carte / Actions -->
+    <!-- Navigation & Feedback -->
     <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-700/50">
-      <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-slate-200 underline">Afficher la réponse</button>
+      <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-pink-400 underline font-semibold transition-colors">Afficher la réponse</button>
       <div id="feedback" class="font-bold text-sm"></div>
-      <button onclick="nextQuestion()" class="st-btn-primary px-5 py-2.5 text-sm flex items-center space-x-2">
+      <button onclick="nextQuestion()" class="krea-btn px-5 py-2.5 text-sm flex items-center space-x-2">
         <span>Suivant</span>
         <span>➔</span>
       </button>
     </div>
     
-    <!-- Boîte de Réponse / Indice -->
-    <div id="hint-box" class="hidden mt-4 p-4 bg-[#1e222d] rounded-lg border border-slate-700 text-center text-sm">
-      Raccourci attendu : <span id="hint-text" class="font-mono font-bold text-sky-400 ml-2"></span>
+    <!-- Indice / Réponse -->
+    <div id="hint-box" class="hidden mt-4 p-4 bg-[#0b0f19] rounded-lg border border-slate-700 text-center text-sm">
+      Raccourci attendu : <span id="hint-text" class="font-mono font-bold text-pink-400 ml-2"></span>
     </div>
 
-  </div>
+  </main>
+
+  <!-- Footer Krea Style -->
+  <footer class="text-center my-6 text-xs text-slate-400">
+    <div class="flex justify-center items-center mb-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-8 h-8 opacity-80">
+        <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#g2)" transform="rotate(-6 49 49)"/>
+        <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#g1)"/>
+        <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">s</text>
+        <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
+      </svg>
+    </div>
+    <p class="font-semibold text-slate-400">Shortcut — by Graphis Studio</p>
+  </footer>
 
   <script>
+    const CATEGORY_COLORS = {
+      'Photoshop': '#38BDF8',
+      'Lightroom': '#60A5FA',
+      'Calques': '#38BDF8',
+      'Sélection': '#EC4899',
+      'Affichage': '#10B981',
+      'Développement': '#60A5FA',
+      'Bibliothèque': '#A855F7'
+    };
+
     const DATA = [
       { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
       { app: 'photoshop', cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
@@ -95,8 +188,8 @@
 
     function setApp(app) {
       currentApp = app;
-      document.getElementById('btn-ps').className = app === 'photoshop' ? 'flex-1 py-2 rounded-md font-medium text-sm transition-all bg-[#262730] text-white shadow-sm' : 'flex-1 py-2 rounded-md font-medium text-sm transition-all text-slate-400 hover:text-white';
-      document.getElementById('btn-lr').className = app === 'lightroom' ? 'flex-1 py-2 rounded-md font-medium text-sm transition-all bg-[#262730] text-white shadow-sm' : 'flex-1 py-2 rounded-md font-medium text-sm transition-all text-slate-400 hover:text-white';
+      document.getElementById('btn-ps').className = app === 'photoshop' ? 'flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold' : 'flex-1 py-2.5 krea-btn text-sm font-bold';
+      document.getElementById('btn-lr').className = app === 'lightroom' ? 'flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold' : 'flex-1 py-2.5 krea-btn text-sm font-bold';
       currentIndex = 0;
       render();
     }
@@ -111,7 +204,10 @@
       const item = items[currentIndex % items.length];
       const os = document.getElementById('os-select').value;
 
-      document.getElementById('category-badge').innerText = item.cat;
+      const badge = document.getElementById('category-badge');
+      badge.innerText = item.cat;
+      badge.style.backgroundColor = CATEGORY_COLORS[item.cat] || '#8B5CF6';
+
       document.getElementById('question-text').innerText = item.q;
       document.getElementById('hint-text').innerText = os === 'mac' ? item.labelMac : item.labelWin;
       document.getElementById('hint-box').classList.add('hidden');
@@ -159,4 +255,3 @@
   </script>
 </body>
 </html>
-```http://googleusercontent.com/image_generation_content/614
