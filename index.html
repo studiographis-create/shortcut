@@ -88,23 +88,6 @@
       color: #38bdf8;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-
-    .vkey-btn {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #cbd5e1;
-      transition: all 0.15s ease;
-      cursor: pointer;
-    }
-    .vkey-btn:hover {
-      border-color: #38bdf8;
-      color: #38bdf8;
-      background: #0f172a;
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-6">
@@ -194,21 +177,16 @@
         <h2 id="question-text" class="text-2xl font-black mt-3 text-white">Dupliquer le calque sélectionné</h2>
       </div>
 
-      <!-- Zone Clavier Interactif -->
-      <div id="drop-zone" class="bg-[#0b0f19] border-2 border-dashed border-slate-700/80 rounded-xl p-6 text-center my-4 min-h-[120px] flex flex-col items-center justify-center">
-        <p class="text-xs text-slate-400 font-medium mb-3">Exécutez le raccourci au clavier ou cliquez sur les touches ci-dessous :</p>
+      <!-- Zone Clavier -->
+      <div id="drop-zone" class="bg-[#0b0f19] border-2 border-dashed border-slate-700/80 rounded-xl p-8 text-center my-6 min-h-[120px] flex flex-col items-center justify-center">
+        <p class="text-xs text-slate-400 font-medium mb-3">Exécutez le raccourci sur votre clavier :</p>
         <div id="keys-pressed" class="flex gap-2 min-h-[42px] items-center">
           <span class="text-slate-500 italic text-sm">En attente de vos touches...</span>
         </div>
       </div>
 
-      <!-- Clavier virtuel dynamique -->
-      <div id="virtual-keyboard" class="flex flex-wrap gap-1.5 justify-center mb-4 p-2 bg-[#0b0f19]/60 rounded-lg border border-slate-800">
-        <!-- Généré dynamiquement -->
-      </div>
-
       <!-- Navigation & Feedback -->
-      <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-700/50">
+      <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-700/50">
         <div class="flex items-center gap-3">
           <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-pink-400 underline font-semibold transition-colors">Afficher la réponse</button>
           <button onclick="resetKeys()" class="text-xs text-slate-500 hover:text-slate-300 underline font-semibold transition-colors">Effacer</button>
@@ -506,34 +484,6 @@
       document.getElementById('hint-box').classList.add('hidden');
       document.getElementById('feedback').innerText = '';
       resetKeys();
-      buildVirtualKeyboard(item, os);
-    }
-
-    function buildVirtualKeyboard(item, os) {
-      const vkb = document.getElementById('virtual-keyboard');
-      const expected = os === 'mac' ? item.mac : item.win;
-      
-      const modKeys = os === 'mac' 
-        ? [{ k: 'Meta', label: '⌘ Cmd' }, { k: 'Shift', label: '⇧ Shift' }, { k: 'Alt', label: '⌥ Option' }]
-        : [{ k: 'Control', label: 'Ctrl' }, { k: 'Shift', label: 'Shift' }, { k: 'Alt', label: 'Alt' }];
-
-      let keysToDisplay = [...modKeys];
-
-      expected.forEach(key => {
-        if (!keysToDisplay.some(m => m.k.toLowerCase() === key.toLowerCase())) {
-          keysToDisplay.push({ k: key, label: key.toUpperCase() });
-        }
-      });
-
-      vkb.innerHTML = keysToDisplay.map(btn => `
-        <button onclick="pressVirtualKey('${btn.k}')" class="vkey-btn">${btn.label}</button>
-      `).join('');
-    }
-
-    function pressVirtualKey(key) {
-      if (document.getElementById('quiz-view').classList.contains('hidden')) return;
-      pressedKeys.add(key);
-      updateDisplayAndCheck();
     }
 
     function resetKeys() {
@@ -640,13 +590,16 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      // Bloque la recharge de page (F5, Cmd+R, Ctrl+R) et autres raccourcis système gênants
-      if (e.key === 'F5' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'r')) {
+      // Annulation des raccourcis système gênants (F5, Cmd+R, Cmd+N, Cmd+T, Tab)
+      const isCmdOrCtrl = e.metaKey || e.ctrlKey;
+      const keyLower = e.key.toLowerCase();
+
+      if (e.key === 'F5' || (isCmdOrCtrl && (keyLower === 'r' || keyLower === 'n' || keyLower === 't'))) {
         e.preventDefault();
         e.stopPropagation();
       }
 
-      if (e.metaKey || e.ctrlKey || e.altKey || e.key === 'Tab') {
+      if (isCmdOrCtrl || e.altKey || e.key === 'Tab') {
         e.preventDefault();
         e.stopPropagation();
       }
