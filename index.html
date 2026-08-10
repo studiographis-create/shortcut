@@ -182,8 +182,8 @@
 
   </main>
 
-  <!-- Footer Style Krea avec Logo Petit -->
-  <footer class="text-center my-6 text-xs text-slate-400 flex flex-col items-center gap-2">
+  <!-- Footer Style Krea avec Lien vers l'App -->
+  <footer class="text-center my-6 text-xs text-slate-400 flex flex-col items-center gap-3">
     <div class="flex items-center gap-2">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-6 h-6 opacity-80">
         <defs>
@@ -203,6 +203,27 @@
       </svg>
       <p class="font-semibold text-slate-400">Shortcut — by Graphis Studio</p>
     </div>
+
+    <!-- Lien avec Logo Krea -->
+    <a href="https://krea-actu.streamlit.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#161e2e] border border-slate-700/80 hover:border-pink-500/50 text-slate-300 hover:text-white transition-all shadow-md group">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-5 h-5 transition-transform group-hover:scale-105">
+        <defs>
+          <linearGradient id="gk1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8B5CF6"/>
+            <stop offset="100%" stop-color="#2563EB"/>
+          </linearGradient>
+          <linearGradient id="gk2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+        <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#gk2)" transform="rotate(-6 49 49)"/>
+        <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#gk1)"/>
+        <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">k</text>
+        <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
+      </svg>
+      <span class="font-medium text-xs">Découvrir <strong class="font-bold text-white">Krea — L'Actu Créative &amp; IA</strong> ↗</span>
+    </a>
   </footer>
 
   <script>
@@ -394,7 +415,6 @@
       `).join('');
     }
 
-    // Interception globale renforcée pour désactiver les raccourcis système Safari/Chrome
     window.addEventListener('keydown', (e) => {
       if (e.metaKey || e.ctrlKey || e.altKey) {
         e.preventDefault();
