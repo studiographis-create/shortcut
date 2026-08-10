@@ -115,8 +115,8 @@
     
     <!-- Choix du Logiciel -->
     <div class="flex gap-3 mb-6">
-      <button id="btn-ps" onclick="setApp('photoshop')" class="flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold">Photoshop</button>
-      <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2.5 krea-btn text-sm font-bold">Lightroom</button>
+      <button id="btn-ps" onclick="setApp('photoshop')" class="flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold">Photoshop (30)</button>
+      <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2.5 krea-btn text-sm font-bold">Lightroom (30)</button>
     </div>
 
     <!-- Zone de Question -->
@@ -150,9 +150,27 @@
 
   </main>
 
-  <!-- Footer Style Krea -->
-  <footer class="text-center my-6 text-xs text-slate-400">
-    <p class="font-semibold text-slate-400">Shortcut — by Graphis Studio</p>
+  <!-- Footer Style Krea avec Logo Petit -->
+  <footer class="text-center my-6 text-xs text-slate-400 flex flex-col items-center gap-2">
+    <div class="flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-6 h-6 opacity-80">
+        <defs>
+          <linearGradient id="gf1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8B5CF6"/>
+            <stop offset="100%" stop-color="#2563EB"/>
+          </linearGradient>
+          <linearGradient id="gf2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+        <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#gf2)" transform="rotate(-6 49 49)"/>
+        <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#gf1)"/>
+        <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">s</text>
+        <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
+      </svg>
+      <p class="font-semibold text-slate-400">Shortcut — by Graphis Studio</p>
+    </div>
   </footer>
 
   <script>
@@ -161,40 +179,86 @@
       'Sélection': '#EC4899',
       'Affichage': '#10B981',
       'Outils': '#F59E0B',
+      'Ajustements': '#A855F7',
+      'Édition': '#6366F1',
       'Bibliothèque': '#A855F7',
-      'Développement': '#60A5FA'
+      'Développement': '#60A5FA',
+      'Masquage': '#EC4899',
+      'Exportation': '#10B981'
     };
 
     const DATA = [
-      // PHOTOSHOP - Calques
+      // ----------------PHOTOSHOP (30) ----------------
       { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
-      { app: 'photoshop', cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'N'], win: ['Control', 'Shift', 'N'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
+      { app: 'photoshop', cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'n'], win: ['Control', 'Shift', 'n'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
       { app: 'photoshop', cat: 'Calques', q: 'Fusionner les calques sélectionnés', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
+      { app: 'photoshop', cat: 'Calques', q: 'Fusionner tous les calques visibles', mac: ['Meta', 'Shift', 'e'], win: ['Control', 'Shift', 'e'], labelMac: 'Cmd + Shift + E', labelWin: 'Ctrl + Shift + E' },
+      { app: 'photoshop', cat: 'Calques', q: 'Créer ou rompre un masque d\'écrêtage', mac: ['Meta', 'Alt', 'g'], win: ['Control', 'Alt', 'g'], labelMac: 'Cmd + Option + G', labelWin: 'Ctrl + Alt + G' },
       
-      // PHOTOSHOP - Sélection
       { app: 'photoshop', cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
       { app: 'photoshop', cat: 'Sélection', q: 'Inverser la sélection', mac: ['Meta', 'Shift', 'i'], win: ['Control', 'Shift', 'i'], labelMac: 'Cmd + Shift + I', labelWin: 'Ctrl + Shift + I' },
       { app: 'photoshop', cat: 'Sélection', q: 'Tout sélectionner', mac: ['Meta', 'a'], win: ['Control', 'a'], labelMac: 'Cmd + A', labelWin: 'Ctrl + A' },
+      { app: 'photoshop', cat: 'Sélection', q: 'Resélectionner la dernière sélection', mac: ['Meta', 'Shift', 'd'], win: ['Control', 'Shift', 'd'], labelMac: 'Cmd + Shift + D', labelWin: 'Ctrl + Shift + D' },
+      { app: 'photoshop', cat: 'Sélection', q: 'Ouvrir l\'espace "Sélectionner et masquer"', mac: ['Meta', 'Alt', 'r'], win: ['Control', 'Alt', 'r'], labelMac: 'Cmd + Option + R', labelWin: 'Ctrl + Alt + R' },
 
-      // PHOTOSHOP - Outils & Affichage
       { app: 'photoshop', cat: 'Outils', q: 'Transformation libre', mac: ['Meta', 't'], win: ['Control', 't'], labelMac: 'Cmd + T', labelWin: 'Ctrl + T' },
       { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Pinceau', mac: ['b'], win: ['b'], labelMac: 'B', labelWin: 'B' },
       { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Gomme', mac: ['e'], win: ['e'], labelMac: 'E', labelWin: 'E' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Tampon de duplication', mac: ['s'], win: ['s'], labelMac: 'S', labelWin: 'S' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Déplacement', mac: ['v'], win: ['v'], labelMac: 'V', labelWin: 'V' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Lasso', mac: ['l'], win: ['l'], labelMac: 'L', labelWin: 'L' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer la Baguette magique / Sélection rapide', mac: ['w'], win: ['w'], labelMac: 'W', labelWin: 'W' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Pot de peinture / Dégradé', mac: ['g'], win: ['g'], labelMac: 'G', labelWin: 'G' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Plume', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
+      { app: 'photoshop', cat: 'Outils', q: 'Activer l\'outil Texte', mac: ['t'], win: ['t'], labelMac: 'T', labelWin: 'T' },
+
       { app: 'photoshop', cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0' },
       { app: 'photoshop', cat: 'Affichage', q: 'Afficher à la taille réelle (Zoom 100%)', mac: ['Meta', '1'], win: ['Control', '1'], labelMac: 'Cmd + 1', labelWin: 'Ctrl + 1' },
+      { app: 'photoshop', cat: 'Affichage', q: 'Afficher / Masquer les règles', mac: ['Meta', 'r'], win: ['Control', 'r'], labelMac: 'Cmd + R', labelWin: 'Ctrl + R' },
+      { app: 'photoshop', cat: 'Affichage', q: 'Afficher / Masquer les repères', mac: ['Meta', ';'], win: ['Control', ';'], labelMac: 'Cmd + ;', labelWin: 'Ctrl + ;' },
 
-      // LIGHTROOM - Bibliothèque
+      { app: 'photoshop', cat: 'Ajustements', q: 'Ouvrir le réglage des Niveaux', mac: ['Meta', 'l'], win: ['Control', 'l'], labelMac: 'Cmd + L', labelWin: 'Ctrl + L' },
+      { app: 'photoshop', cat: 'Ajustements', q: 'Ouvrir le réglage des Courbes', mac: ['Meta', 'm'], win: ['Control', 'm'], labelMac: 'Cmd + M', labelWin: 'Ctrl + M' },
+      { app: 'photoshop', cat: 'Ajustements', q: 'Inverser les couleurs', mac: ['Meta', 'i'], win: ['Control', 'i'], labelMac: 'Cmd + I', labelWin: 'Ctrl + I' },
+
+      { app: 'photoshop', cat: 'Édition', q: 'Annuler la dernière action', mac: ['Meta', 'z'], win: ['Control', 'z'], labelMac: 'Cmd + Z', labelWin: 'Ctrl + Z' },
+      { app: 'photoshop', cat: 'Édition', q: 'Ouvrir la fenêtre Remplir', mac: ['Shift', 'F5'], win: ['Shift', 'F5'], labelMac: 'Shift + F5', labelWin: 'Shift + F5' },
+      { app: 'photoshop', cat: 'Édition', q: 'Activer / Désactiver le Mode Masque rapide', mac: ['q'], win: ['q'], labelMac: 'Q', labelWin: 'Q' },
+
+      // ---------------- LIGHTROOM (30) ----------------
       { app: 'lightroom', cat: 'Bibliothèque', q: 'Marquer la photo comme retenue (Fanion vert)', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
       { app: 'lightroom', cat: 'Bibliothèque', q: 'Rejeter la photo (Croix rouge)', mac: ['x'], win: ['x'], labelMac: 'X', labelWin: 'X' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Supprimer le fanion d\'évaluation', mac: ['u'], win: ['u'], labelMac: 'U', labelWin: 'U' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Attribuer la note 1 étoile', mac: ['1'], win: ['1'], labelMac: '1', labelWin: '1' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Attribuer la note 2 étoiles', mac: ['2'], win: ['2'], labelMac: '2', labelWin: '2' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Attribuer la note 3 étoiles', mac: ['3'], win: ['3'], labelMac: '3', labelWin: '3' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Attribuer la note 4 étoiles', mac: ['4'], win: ['4'], labelMac: '4', labelWin: '4' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Attribuer la note 5 étoiles', mac: ['5'], win: ['5'], labelMac: '5', labelWin: '5' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Appliquer le libellé couleur Rouge', mac: ['6'], win: ['6'], labelMac: '6', labelWin: '6' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Appliquer le libellé couleur Jaune', mac: ['7'], win: ['7'], labelMac: '7', labelWin: '7' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Appliquer le libellé couleur Vert', mac: ['8'], win: ['8'], labelMac: '8', labelWin: '8' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Appliquer le libellé couleur Bleu', mac: ['9'], win: ['9'], labelMac: '9', labelWin: '9' },
       { app: 'lightroom', cat: 'Bibliothèque', q: 'Afficher le mode Grille', mac: ['g'], win: ['g'], labelMac: 'G', labelWin: 'G' },
-      { app: 'lightroom', cat: 'Bibliothèque', q: 'Extinction des feux (Masquer l\'interface)', mac: ['l'], win: ['l'], labelMac: 'L', labelWin: 'L' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Afficher le mode Loupe', mac: ['e'], win: ['e'], labelMac: 'E', labelWin: 'E' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Afficher le mode Comparaison', mac: ['c'], win: ['c'], labelMac: 'C', labelWin: 'C' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Afficher le mode Ensemble', mac: ['n'], win: ['n'], labelMac: 'N', labelWin: 'N' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Extinction des feux (Atténuer/masquer l\'interface)', mac: ['l'], win: ['l'], labelMac: 'L', labelWin: 'L' },
 
-      // LIGHTROOM - Développement
-      { app: 'lightroom', cat: 'Développement', q: 'Passer au module Développement', mac: ['d'], win: ['d'], labelMac: 'D', labelWin: 'D' },
+      { app: 'lightroom', cat: 'Développement', q: 'Basculer vers le module Développement', mac: ['d'], win: ['d'], labelMac: 'D', labelWin: 'D' },
       { app: 'lightroom', cat: 'Développement', q: 'Passer en mode comparaison Avant / Après', mac: ['\\'], win: ['\\'], labelMac: '\\', labelWin: '\\' },
-      { app: 'lightroom', cat: 'Développement', q: 'Convertir la photo en Noir & Blanc', mac: ['v'], win: ['v'], labelMac: 'V', labelWin: 'V' },
+      { app: 'lightroom', cat: 'Développement', q: 'Convertir l\'image en Noir & Blanc', mac: ['v'], win: ['v'], labelMac: 'V', labelWin: 'V' },
       { app: 'lightroom', cat: 'Développement', q: 'Afficher / Masquer les avertissements d\'écrêtage', mac: ['j'], win: ['j'], labelMac: 'J', labelWin: 'J' },
-      { app: 'lightroom', cat: 'Développement', q: 'Activer l\'outil Pinceau de retouche', mac: ['k'], win: ['k'], labelMac: 'K', labelWin: 'K' }
+      
+      { app: 'lightroom', cat: 'Masquage', q: 'Activer l\'outil Pinceau de retouche', mac: ['k'], win: ['k'], labelMac: 'K', labelWin: 'K' },
+      { app: 'lightroom', cat: 'Masquage', q: 'Activer l\'outil Recadrage', mac: ['r'], win: ['r'], labelMac: 'R', labelWin: 'R' },
+      { app: 'lightroom', cat: 'Masquage', q: 'Activer l\'outil Correction / Suppression des défauts', mac: ['q'], win: ['q'], labelMac: 'Q', labelWin: 'Q' },
+      { app: 'lightroom', cat: 'Masquage', q: 'Activer le Filtre gradué (Linaire)', mac: ['m'], win: ['m'], labelMac: 'M', labelWin: 'M' },
+      { app: 'lightroom', cat: 'Masquage', q: 'Activer le Filtre radial', mac: ['Shift', 'm'], win: ['Shift', 'm'], labelMac: 'Shift + M', labelWin: 'Shift + M' },
+
+      { app: 'lightroom', cat: 'Édition', q: 'Copier les paramètres de développement', mac: ['Meta', 'Shift', 'c'], win: ['Control', 'Shift', 'c'], labelMac: 'Cmd + Shift + C', labelWin: 'Ctrl + Shift + C' },
+      { app: 'lightroom', cat: 'Édition', q: 'Coller les paramètres de développement', mac: ['Meta', 'Shift', 'v'], win: ['Control', 'Shift', 'v'], labelMac: 'Cmd + Shift + V', labelWin: 'Ctrl + Shift + V' },
+      { app: 'lightroom', cat: 'Édition', q: 'Réinitialiser tous les réglages de développement', mac: ['Meta', 'Shift', 'r'], win: ['Control', 'Shift', 'r'], labelMac: 'Cmd + Shift + R', labelWin: 'Ctrl + Shift + R' },
+      { app: 'lightroom', cat: 'Exportation', q: 'Ouvrir la fenêtre d\'Exportation', mac: ['Meta', 'Shift', 'e'], win: ['Control', 'Shift', 'e'], labelMac: 'Cmd + Shift + E', labelWin: 'Ctrl + Shift + E' }
     ];
 
     let currentApp = 'photoshop';
@@ -256,7 +320,6 @@
       const container = document.getElementById('keys-pressed');
       container.innerHTML = Array.from(pressedKeys).map(k => `<span class="kbd">${k.toUpperCase()}</span>`).join(' + ');
 
-      // Normalisation pour comparaison insensible à la casse
       const expectedNormalized = expectedKeys.map(k => k.toLowerCase());
       const pressedArray = Array.from(pressedKeys).map(k => k.toLowerCase());
 
