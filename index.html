@@ -35,7 +35,6 @@
     <div class="text-center my-8">
       <span id="category-badge" class="text-xs uppercase tracking-wider bg-slate-700 text-slate-300 px-3 py-1 rounded-full">Catégorie</span>
       <h1 id="question-text" class="text-2xl font-extrabold mt-4 text-white">Question ici...</h1>
-      <p id="pdf-ref" class="text-xs text-slate-400 mt-2">Support de cours : Page --</p>
     </div>
 
     <!-- Zone d'interaction clavier -->
@@ -60,11 +59,11 @@
 
   <script>
     const DATA = [
-      { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J', page: 'Page 12' },
-      { app: 'photoshop', cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D', page: 'Page 18' },
-      { app: 'photoshop', cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0', page: 'Page 5' },
-      { app: 'lightroom', cat: 'Développement', q: 'Passer en mode Avant / Après', mac: ['\\'], win: ['\\'], labelMac: '\\', labelWin: '\\', page: 'Page 34' },
-      { app: 'lightroom', cat: 'Bibliothèque', q: 'Marquer la photo comme retenue (Fanion)', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P', page: 'Page 22' },
+      { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
+      { app: 'photoshop', cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
+      { app: 'photoshop', cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0' },
+      { app: 'lightroom', cat: 'Développement', q: 'Passer en mode Avant / Après', mac: ['\\'], win: ['\\'], labelMac: '\\', labelWin: '\\' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Marquer la photo comme retenue (Fanion)', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
     ];
 
     let currentApp = 'photoshop';
@@ -91,7 +90,6 @@
 
       document.getElementById('category-badge').innerText = item.cat;
       document.getElementById('question-text').innerText = item.q;
-      document.getElementById('pdf-ref').innerText = `Support de cours : ${item.page}`;
       document.getElementById('hint-text').innerText = os === 'mac' ? item.labelMac : item.labelWin;
       document.getElementById('hint-box').classList.add('hidden');
       document.getElementById('feedback').innerText = '';
@@ -113,7 +111,6 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      // Éviter les raccourcis par défaut du navigateur (Ctrl+S, Cmd+D, etc.)
       if (e.metaKey || e.ctrlKey) e.preventDefault();
       
       pressedKeys.add(e.key);
@@ -123,11 +120,9 @@
       const os = document.getElementById('os-select').value;
       const expectedKeys = os === 'mac' ? item.mac : item.win;
 
-      // Affichage visuel des touches
       const container = document.getElementById('keys-pressed');
       container.innerHTML = Array.from(pressedKeys).map(k => `<span class="kbd">${k.toUpperCase()}</span>`).join(' + ');
 
-      // Validation
       const isCorrect = expectedKeys.length === pressedKeys.size && expectedKeys.every(k => pressedKeys.has(k) || pressedKeys.has(k.toLowerCase()));
       if (isCorrect) {
         document.getElementById('feedback').innerHTML = '<span class="text-emerald-400">Bravo ! Raccourci correct.</span>';
@@ -138,7 +133,6 @@
       pressedKeys.delete(e.key);
     });
 
-    // Initialisation
     render();
   </script>
 </body>
