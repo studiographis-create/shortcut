@@ -384,13 +384,13 @@
       { app: 'lightroom', lvl: 2, cat: 'Bibliothèque', q: 'Désélectionner toutes les photos', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
       { app: 'lightroom', lvl: 2, cat: 'Bibliothèque', q: 'Ouvrir les photos dans Photoshop', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
 
-      // NIV 3 - Expert
+      // NIV 3 - Expert (Cmd + H remplacé par Cmd + Shift + H pour la sécurité du navigateur)
       { app: 'lightroom', lvl: 3, cat: 'Édition', q: 'Copier les paramètres du cliché précédent', mac: ['Meta', 'Alt', 'v'], win: ['Control', 'Alt', 'v'], labelMac: 'Cmd + Option + V', labelWin: 'Ctrl + Alt + V' },
       { app: 'lightroom', lvl: 3, cat: 'Masquage', q: 'Activer le masque d\'IA (Sujet / Ciel)', mac: ['n'], win: ['n'], labelMac: 'N', labelWin: 'N' },
       { app: 'lightroom', lvl: 3, cat: 'Développement', q: 'Basculer l\'incrustation de masque', mac: ['o'], win: ['o'], labelMac: 'O', labelWin: 'O' },
       { app: 'lightroom', lvl: 3, cat: 'Développement', q: 'Changer la couleur de l\'incrustation de masque', mac: ['Shift', 'O'], win: ['Shift', 'O'], labelMac: 'Shift + O', labelWin: 'Shift + O' },
       { app: 'lightroom', lvl: 3, cat: 'Développement', q: 'Fusion panoramique automatique', mac: ['Meta', 'm'], win: ['Control', 'm'], labelMac: 'Cmd + M', labelWin: 'Ctrl + M' },
-      { app: 'lightroom', lvl: 3, cat: 'Développement', q: 'Fusion HDR automatique', mac: ['Meta', 'h'], win: ['Control', 'h'], labelMac: 'Cmd + H', labelWin: 'Ctrl + H' },
+      { app: 'lightroom', lvl: 3, cat: 'Développement', q: 'Masquer / Afficher les incrustations de retouche', mac: ['Meta', 'Shift', 'h'], win: ['Control', 'Shift', 'h'], labelMac: 'Cmd + Shift + H', labelWin: 'Ctrl + Shift + H' },
       { app: 'lightroom', lvl: 3, cat: 'Bibliothèque', q: 'Empiler les photos sélectionnées', mac: ['Meta', 'g'], win: ['Control', 'g'], labelMac: 'Cmd + G', labelWin: 'Ctrl + G' },
       { app: 'lightroom', lvl: 3, cat: 'Bibliothèque', q: 'Dissocier la pile de photos', mac: ['Meta', 'Shift', 'G'], win: ['Control', 'Shift', 'G'], labelMac: 'Cmd + Shift + G', labelWin: 'Ctrl + Shift + G' },
       { app: 'lightroom', lvl: 3, cat: 'Exportation', q: 'Exporter avec les paramètres précédents', mac: ['Meta', 'Alt', 'Shift', 'E'], win: ['Control', 'Alt', 'Shift', 'E'], labelMac: 'Cmd + Option + Shift + E', labelWin: 'Ctrl + Alt + Shift + E' },
@@ -590,11 +590,11 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      // Annulation des raccourcis système gênants (F5, Cmd+R, Cmd+N, Cmd+T, Tab)
+      // Interception renforcée des raccourcis navigateur/système
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
       const keyLower = e.key.toLowerCase();
 
-      if (e.key === 'F5' || (isCmdOrCtrl && (keyLower === 'r' || keyLower === 'n' || keyLower === 't'))) {
+      if (e.key === 'F5' || (isCmdOrCtrl && (keyLower === 'r' || keyLower === 'n' || keyLower === 't' || keyLower === 'h'))) {
         e.preventDefault();
         e.stopPropagation();
       }
