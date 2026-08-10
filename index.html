@@ -141,7 +141,7 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <!-- Bouton Plein Écran Mis en Avant -->
+        <!-- Bouton Plein Écran -->
         <button id="header-fs-btn" onclick="toggleFullScreen()" class="bg-[#1e293b] hover:bg-pink-500/20 border-pink-500/40 text-slate-200 text-xs font-bold rounded-lg px-3 py-2 border transition-all flex items-center gap-1.5 shadow-lg shadow-pink-500/10" title="Passer en plein écran pour capturer tous les raccourcis">
           <svg class="w-3.5 h-3.5 text-pink-400 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
@@ -187,27 +187,36 @@
       <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2.5 krea-btn text-sm font-bold">Lightroom</button>
     </div>
 
-    <!-- Choix du Niveau -->
+    <!-- Choix du Niveau avec Affichage des Best Scores -->
     <div class="flex gap-2 mb-6 bg-[#0b0f19] p-1.5 rounded-xl border border-slate-800">
-      <button id="lvl-1" onclick="setLevel(1)" class="flex-1 py-2 level-btn level-btn-active flex items-center justify-center gap-1.5">
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2l2.4 7.2 7.6 2.4-7.6 2.4L12 22l-2.4-7.2-7.6-2.4 7.6-2.4z"/>
-        </svg>
-        <span>Élémentaire (20)</span>
+      <button id="lvl-1" onclick="setLevel(1)" class="flex-1 py-2 level-btn level-btn-active flex flex-col items-center justify-center gap-0.5">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l2.4 7.2 7.6 2.4-7.6 2.4L12 22l-2.4-7.2-7.6-2.4 7.6-2.4z"/>
+          </svg>
+          <span>Élémentaire (20)</span>
+        </div>
+        <span id="best-lvl-1" class="text-[10px] opacity-75 font-normal">Record : -</span>
       </button>
 
-      <button id="lvl-2" onclick="setLevel(2)" class="flex-1 py-2 level-btn flex items-center justify-center gap-1.5">
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-        </svg>
-        <span>Intermédiaire (20)</span>
+      <button id="lvl-2" onclick="setLevel(2)" class="flex-1 py-2 level-btn flex flex-col items-center justify-center gap-0.5">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          <span>Intermédiaire (20)</span>
+        </div>
+        <span id="best-lvl-2" class="text-[10px] opacity-75 font-normal">Record : -</span>
       </button>
 
-      <button id="lvl-3" onclick="setLevel(3)" class="flex-1 py-2 level-btn flex items-center justify-center gap-1.5">
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-        </svg>
-        <span>Expert (20)</span>
+      <button id="lvl-3" onclick="setLevel(3)" class="flex-1 py-2 level-btn flex flex-col items-center justify-center gap-0.5">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+          </svg>
+          <span>Expert (20)</span>
+        </div>
+        <span id="best-lvl-3" class="text-[10px] opacity-75 font-normal">Record : -</span>
       </button>
     </div>
 
@@ -255,7 +264,7 @@
     <div id="result-view" class="hidden text-center py-4">
       
       <!-- Icône Trophée Vectorielle -->
-      <div class="inline-flex p-3.5 mb-3 bg-[#0b0f19] border border-slate-700/80 rounded-2xl shadow-xl shadow-pink-500/10">
+      <div class="inline-flex p-3.5 mb-2 bg-[#0b0f19] border border-slate-700/80 rounded-2xl shadow-xl shadow-pink-500/10">
         <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="url(#trophyG1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <defs>
             <linearGradient id="trophyG1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -272,7 +281,14 @@
         </svg>
       </div>
 
-      <h2 class="text-3xl font-black text-white mb-2">Niveau terminé !</h2>
+      <!-- Badge Record Battu (affiché si nouveau record) -->
+      <div id="new-record-badge" class="hidden my-2">
+        <span class="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-lg animate-bounce inline-block">
+          🎉 Nouveau Record Personnel !
+        </span>
+      </div>
+
+      <h2 class="text-3xl font-black text-white mb-1">Niveau terminé !</h2>
       <p class="text-slate-400 text-sm mb-6">Voici le récapitulatif de vos performances :</p>
 
       <div class="bg-[#0b0f19] rounded-xl p-6 mb-6 border border-slate-800 flex justify-around items-center">
@@ -298,7 +314,7 @@
 
   </main>
 
-  <!-- Footer avec Lien Krea -->
+  <!-- Footer avec Lien Krea & Reset Storage -->
   <footer class="text-center my-6 text-xs text-slate-400 flex flex-col items-center gap-3">
     <div class="flex items-center gap-2">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-6 h-6 opacity-80">
@@ -310,7 +326,7 @@
         <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#gf2)" transform="rotate(-6 49 49)"/>
         <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#gf1)"/>
         <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">k</text>
-        <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
+        <path d="M 72 6 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
       </svg>
       <p class="font-semibold text-slate-400">Shortcut — by Graphis Studio</p>
     </div>
@@ -325,10 +341,15 @@
         <rect x="18" y="18" width="62" height="62" rx="14" fill="url(#gk2)" transform="rotate(-6 49 49)"/>
         <rect x="12" y="12" width="62" height="62" rx="14" fill="url(#gk1)"/>
         <text x="43" y="56" font-family="sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" transform="rotate(-10 43 56)">k</text>
-        <path d="M 72 6 Q 72 14 80 14 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
+        <path d="M 72 6 Q 72 14 72 22 Q 72 14 64 14 Q 72 14 72 6 Z" fill="#F472B6"/>
       </svg>
       <span class="font-medium text-xs">Découvrir <strong class="font-bold text-white">Krea — L'Actu Créative &amp; IA</strong> ↗</span>
     </a>
+
+    <!-- Bouton de réinitialisation des scores -->
+    <button onclick="clearBestScores()" class="text-[10px] text-slate-500 hover:text-rose-400 underline transition-colors mt-2">
+      Réinitialiser mes meilleurs scores
+    </button>
   </footer>
 
   <script>
@@ -339,7 +360,7 @@
       });
     }
 
-    // Gestion dynamique du plein écran
+    // Gestion du Plein Écran
     function toggleFullScreen() {
       if (!document.fullscreenElement && !document.webkitFullscreenElement) {
         if (document.documentElement.requestFullscreen) {
@@ -356,7 +377,6 @@
       }
     }
 
-    // Détection du statut plein écran pour masquer la bannière automatiquement
     function updateFSUI() {
       const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
       const banner = document.getElementById('fs-banner');
@@ -522,6 +542,47 @@
     let currentQuestionAnswered = false;
     let historyResults = [];
 
+    // Fonctions LocalStorage
+    function getBestScoreKey(app, lvl) {
+      return `shortcut_pro_best_${app}_lvl${lvl}`;
+    }
+
+    function getBestScore(app, lvl) {
+      const data = localStorage.getItem(getBestScoreKey(app, lvl));
+      return data ? JSON.parse(data) : null;
+    }
+
+    function saveBestScore(app, lvl, score, total, percent) {
+      const current = getBestScore(app, lvl);
+      if (!current || score > current.score) {
+        localStorage.setItem(getBestScoreKey(app, lvl), JSON.stringify({ score, total, percent }));
+        return true; // Nouveau record
+      }
+      return false;
+    }
+
+    function updateBestScoresUI() {
+      for (let lvl = 1; lvl <= 3; lvl++) {
+        const best = getBestScore(currentApp, lvl);
+        const el = document.getElementById(`best-lvl-${lvl}`);
+        if (best) {
+          el.innerText = `Record : ${best.score}/${best.total} (${best.percent}%)`;
+        } else {
+          el.innerText = `Record : -`;
+        }
+      }
+    }
+
+    function clearBestScores() {
+      if (confirm("Voulez-vous vraiment réinitialiser vos meilleurs scores enregistrés ?")) {
+        for (let lvl = 1; lvl <= 3; lvl++) {
+          localStorage.removeItem(getBestScoreKey('photoshop', lvl));
+          localStorage.removeItem(getBestScoreKey('lightroom', lvl));
+        }
+        updateBestScoresUI();
+      }
+    }
+
     function setApp(app) {
       currentApp = app;
       const btnPs = document.getElementById('btn-ps');
@@ -533,6 +594,7 @@
         btnPs.className = 'flex-1 py-2.5 krea-btn text-sm font-bold';
         btnLr.className = 'flex-1 py-2.5 krea-btn krea-btn-active text-sm font-bold';
       }
+      updateBestScoresUI();
       restartQuiz();
     }
 
@@ -627,6 +689,17 @@
 
       document.getElementById('final-score').innerText = `${successCount} / ${totalCount}`;
       document.getElementById('final-percent').innerText = `${percentage}%`;
+
+      // Enregistrement et vérification de record
+      const isNewRecord = saveBestScore(currentApp, currentLevel, successCount, totalCount, percentage);
+      const recordBadge = document.getElementById('new-record-badge');
+      if (isNewRecord) {
+        recordBadge.classList.remove('hidden');
+      } else {
+        recordBadge.classList.add('hidden');
+      }
+
+      updateBestScoresUI();
 
       const nextBtn = document.getElementById('btn-next-level');
       if (currentLevel === 3) {
@@ -723,6 +796,8 @@
       pressedKeys.delete(e.key);
     });
 
+    // Initialisation
+    updateBestScoresUI();
     render();
   </script>
 </body>
