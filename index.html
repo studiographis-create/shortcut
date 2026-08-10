@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entraîneur de Raccourcis Adobe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
+    .kbd {
+      background: #334155; border: 1px solid #475569; border-bottom-width: 3px;
+      border-radius: 0.375rem; padding: 0.25rem 0.6rem; font-family: monospace;
+      font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+  <div class="max-w-2xl w-full bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-6">
+    <!-- En-tête / Choix du logiciel -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex space-x-2">
+        <button id="btn-ps" onclick="setApp('photoshop')" class="px-4 py-2 rounded-lg font-bold bg-blue-600 text-white">Photoshop</button>
+        <button id="btn-lr" onclick="setApp('lightroom')" class="px-4 py-2 rounded-lg font-bold bg-slate-700 text-slate-300">Lightroom</button>
+      </div>
+      <div class="flex space-x-2 text-sm">
+        <select id="os-select" onchange="render()" class="bg-slate-700 text-slate-200 rounded px-2 py-1 border border-slate-600">
+          <option value="mac">macOS (Cmd ⌘)</option>
+          <option value="win">Windows (Ctrl ⌃)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Zone de question -->
+    <div class="text-center my-8">
+      <span id="category-badge" class="text-xs uppercase tracking-wider bg-slate-700 text-slate-300 px-3 py-1 rounded-full">Catégorie</span>
+      <h1 id="question-text" class="text-2xl font-extrabold mt-4 text-white">Question ici...</h1>
+      <p id="pdf-ref" class="text-xs text-slate-400 mt-2">Support de cours : Page --</p>
+    </div>
+
+    <!-- Zone d'interaction clavier -->
+    <div id="drop-zone" class="bg-slate-900 border-2 border-dashed border-slate-600 rounded-lg p-6 text-center my-6 min-h-[100px] flex flex-col items-center justify-center">
+      <p class="text-sm text-slate-400 mb-3">Exécutez le raccourci sur votre clavier :</p>
+      <div id="keys-pressed" class="flex gap-2 min-h-[36px] items-center">
+        <span class="text-slate-500 italic text-sm">En attente de vos touches...</span>
+      </div>
+    </div>
+
+    <!-- Feedback / Boutons -->
+    <div class="flex justify-between items-center mt-6">
+      <button onclick="toggleHint()" class="text-xs text-slate-400 underline hover:text-slate-200">Voir la réponse</button>
+      <div id="feedback" class="font-bold text-sm"></div>
+      <button onclick="nextQuestion()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium text-sm">Question suivante ➔</button>
+    </div>
+    
+    <div id="hint-box" class="hidden mt-4 p-3 bg-slate-700/50 rounded border border-slate-600 text-center text-sm">
+      Réponse : <span id="hint-text" class="font-mono font-bold text-amber-400"></span>
+    </div>
+  </div>
+
+  <script>
+    const DATA = [
+      { app: 'photoshop', cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J', page: 'Page 12' },
+      { app: 'photoshop', cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D', page: 'Page 18' },
+      { app: 'photoshop', cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0', page: 'Page 5' },
+      { app: 'lightroom', cat: 'Développement', q: 'Passer en mode Avant / Après', mac: ['\\'], win: ['\\'], labelMac: '\\', labelWin: '\\', page: 'Page 34' },
+      { app: 'lightroom', cat: 'Bibliothèque', q: 'Marquer la photo comme retenue (Fanion)', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P', page: 'Page 22' },
+    ];
+
+    let currentApp = 'photoshop';
+    let currentIndex = 0;
+    let pressedKeys = new Set();
+
+    function setApp(app) {
+      currentApp = app;
+      document.getElementById('btn-ps').className = app === 'photoshop' ? 'px-4 py-2 rounded-lg font-bold bg-blue-600 text-white' : 'px-4 py-2 rounded-lg font-bold bg-slate-700 text-slate-300';
+      document.getElementById('btn-lr').className = app === 'lightroom' ? 'px-4 py-2 rounded-lg font-bold bg-blue-600 text-white' : 'px-4 py-2 rounded-lg font-bold bg-slate-700 text-slate-300';
+      currentIndex = 0;
+      render();
+    }
+
+    function getFilteredData() {
+      return DATA.filter(item => item.app === currentApp);
+    }
+
+    function render() {
+      const items = getFilteredData();
+      if (!items.length) return;
+      const item = items[currentIndex % items.length];
+      const os = document.getElementById('os-select').value;
+
+      document.getElementById('category-badge').innerText = item.cat;
+      document.getElementById('question-text').innerText = item.q;
+      document.getElementById('pdf-ref').innerText = `Support de cours : ${item.page}`;
+      document.getElementById('hint-text').innerText = os === 'mac' ? item.labelMac : item.labelWin;
+      document.getElementById('hint-box').classList.add('hidden');
+      document.getElementById('feedback').innerText = '';
+      resetKeys();
+    }
+
+    function resetKeys() {
+      pressedKeys.clear();
+      document.getElementById('keys-pressed').innerHTML = '<span class="text-slate-500 italic text-sm">En attente de vos touches...</span>';
+    }
+
+    function toggleHint() {
+      document.getElementById('hint-box').classList.toggle('hidden');
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      render();
+    }
+
+    window.addEventListener('keydown', (e) => {
+      // Éviter les raccourcis par défaut du navigateur (Ctrl+S, Cmd+D, etc.)
+      if (e.metaKey || e.ctrlKey) e.preventDefault();
+      
+      pressedKeys.add(e.key);
+      
+      const items = getFilteredData();
+      const item = items[currentIndex % items.length];
+      const os = document.getElementById('os-select').value;
+      const expectedKeys = os === 'mac' ? item.mac : item.win;
+
+      // Affichage visuel des touches
+      const container = document.getElementById('keys-pressed');
+      container.innerHTML = Array.from(pressedKeys).map(k => `<span class="kbd">${k.toUpperCase()}</span>`).join(' + ');
+
+      // Validation
+      const isCorrect = expectedKeys.length === pressedKeys.size && expectedKeys.every(k => pressedKeys.has(k) || pressedKeys.has(k.toLowerCase()));
+      if (isCorrect) {
+        document.getElementById('feedback').innerHTML = '<span class="text-emerald-400">Bravo ! Raccourci correct.</span>';
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      pressedKeys.delete(e.key);
+    });
+
+    // Initialisation
+    render();
+  </script>
+</body>
+</html>
