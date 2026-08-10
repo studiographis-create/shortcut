@@ -88,6 +88,23 @@
       color: #38bdf8;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
+
+    .vkey-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .vkey-btn:hover {
+      border-color: #38bdf8;
+      color: #38bdf8;
+      background: #0f172a;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between p-4 md:p-6">
@@ -140,7 +157,7 @@
       <button id="btn-lr" onclick="setApp('lightroom')" class="flex-1 py-2.5 krea-btn text-sm font-bold">Lightroom</button>
     </div>
 
-    <!-- Choix du Niveau avec Icones SVG Krea -->
+    <!-- Choix du Niveau -->
     <div class="flex gap-2 mb-6 bg-[#0b0f19] p-1.5 rounded-xl border border-slate-800">
       <button id="lvl-1" onclick="setLevel(1)" class="flex-1 py-2 level-btn level-btn-active flex items-center justify-center gap-1.5">
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -178,16 +195,24 @@
       </div>
 
       <!-- Zone Clavier Interactif -->
-      <div id="drop-zone" class="bg-[#0b0f19] border-2 border-dashed border-slate-700/80 rounded-xl p-8 text-center my-6 min-h-[120px] flex flex-col items-center justify-center">
-        <p class="text-xs text-slate-400 font-medium mb-3">Exécutez le raccourci sur votre clavier :</p>
+      <div id="drop-zone" class="bg-[#0b0f19] border-2 border-dashed border-slate-700/80 rounded-xl p-6 text-center my-4 min-h-[120px] flex flex-col items-center justify-center">
+        <p class="text-xs text-slate-400 font-medium mb-3">Exécutez le raccourci au clavier ou cliquez sur les touches ci-dessous :</p>
         <div id="keys-pressed" class="flex gap-2 min-h-[42px] items-center">
           <span class="text-slate-500 italic text-sm">En attente de vos touches...</span>
         </div>
       </div>
 
+      <!-- Clavier virtuel dynamique (Alternative clic pour navigateurs stricts) -->
+      <div id="virtual-keyboard" class="flex flex-wrap gap-1.5 justify-center mb-4 p-2 bg-[#0b0f19]/60 rounded-lg border border-slate-800">
+        <!-- Généré dynamiquement selon la question -->
+      </div>
+
       <!-- Navigation & Feedback -->
-      <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-700/50">
-        <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-pink-400 underline font-semibold transition-colors">Afficher la réponse</button>
+      <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-700/50">
+        <div class="flex items-center gap-3">
+          <button onclick="toggleHint()" class="text-xs text-slate-400 hover:text-pink-400 underline font-semibold transition-colors">Afficher la réponse</button>
+          <button onclick="resetKeys()" class="text-xs text-slate-500 hover:text-slate-300 underline font-semibold transition-colors">Effacer</button>
+        </div>
         <div id="feedback" class="font-bold text-sm min-h-[24px]"></div>
         <button onclick="nextQuestion()" class="krea-btn px-5 py-2.5 text-sm flex items-center space-x-2">
           <span>Suivant</span>
@@ -293,7 +318,7 @@
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Réinitialiser les couleurs par défaut (Noir/Blanc)', mac: ['d'], win: ['d'], labelMac: 'D', labelWin: 'D' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Activer / Désactiver le Mode Masque rapide', mac: ['q'], win: ['q'], labelMac: 'Q', labelWin: 'Q' },
 
-      // NIV 2 - Intermédiaire
+      // NIV 2 - Intermédiaire (Cmd + T conservé)
       { app: 'photoshop', lvl: 2, cat: 'Outils', q: 'Transformation libre', mac: ['Meta', 't'], win: ['Control', 't'], labelMac: 'Cmd + T', labelWin: 'Ctrl + T' },
       { app: 'photoshop', lvl: 2, cat: 'Calques', q: 'Fusionner les calques sélectionnés', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
       { app: 'photoshop', lvl: 2, cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'N'], win: ['Control', 'Shift', 'N'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
@@ -481,6 +506,34 @@
       document.getElementById('hint-box').classList.add('hidden');
       document.getElementById('feedback').innerText = '';
       resetKeys();
+      buildVirtualKeyboard(item, os);
+    }
+
+    function buildVirtualKeyboard(item, os) {
+      const vkb = document.getElementById('virtual-keyboard');
+      const expected = os === 'mac' ? item.mac : item.win;
+      
+      const modKeys = os === 'mac' 
+        ? [{ k: 'Meta', label: '⌘ Cmd' }, { k: 'Shift', label: '⇧ Shift' }, { k: 'Alt', label: '⌥ Option' }]
+        : [{ k: 'Control', label: 'Ctrl' }, { k: 'Shift', label: 'Shift' }, { k: 'Alt', label: 'Alt' }];
+
+      let keysToDisplay = [...modKeys];
+
+      expected.forEach(key => {
+        if (!keysToDisplay.some(m => m.k.toLowerCase() === key.toLowerCase())) {
+          keysToDisplay.push({ k: key, label: key.toUpperCase() });
+        }
+      });
+
+      vkb.innerHTML = keysToDisplay.map(btn => `
+        <button onclick="pressVirtualKey('${btn.k}')" class="vkey-btn">${btn.label}</button>
+      `).join('');
+    }
+
+    function pressVirtualKey(key) {
+      if (document.getElementById('quiz-view').classList.contains('hidden')) return;
+      pressedKeys.add(key);
+      updateDisplayAndCheck();
     }
 
     function resetKeys() {
@@ -538,23 +591,20 @@
       `).join('');
     }
 
-    window.addEventListener('keydown', (e) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      if (document.getElementById('quiz-view').classList.contains('hidden')) return;
-
-      pressedKeys.add(e.key);
-      
+    function updateDisplayAndCheck() {
       const items = getFilteredData();
       const item = items[currentIndex];
       const os = document.getElementById('os-select').value;
       const expectedKeys = os === 'mac' ? item.mac : item.win;
 
       const container = document.getElementById('keys-pressed');
-      container.innerHTML = Array.from(pressedKeys).map(k => `<span class="kbd">${k.toUpperCase()}</span>`).join(' + ');
+      container.innerHTML = Array.from(pressedKeys).map(k => {
+        let label = k.toUpperCase();
+        if (k === 'Meta') label = 'CMD';
+        if (k === 'Control') label = 'CTRL';
+        if (k === 'Alt') label = 'OPTION / ALT';
+        return `<span class="kbd">${label}</span>`;
+      }).join(' + ');
 
       const expectedNormalized = expectedKeys.map(k => k.toLowerCase());
       const pressedArray = Array.from(pressedKeys).map(k => k.toLowerCase());
@@ -587,6 +637,19 @@
       } else {
         feedbackEl.innerText = '';
       }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      // Bloque les raccourcis système / navigateur comme Cmd+T, Cmd+S, Tab, etc.
+      if (e.metaKey || e.ctrlKey || e.altKey || e.key === 'Tab') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (document.getElementById('quiz-view').classList.contains('hidden')) return;
+
+      pressedKeys.add(e.key);
+      updateDisplayAndCheck();
     }, true);
 
     window.addEventListener('keyup', (e) => {
