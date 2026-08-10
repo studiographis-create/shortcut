@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shortcut PRO — Entraîneur de Raccourcis Adobe</title>
+
+  <!-- PWA Metadata -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Shortcut PRO">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -207,7 +215,7 @@
     <!-- VUE SCORE / RÉCAPITULATIF -->
     <div id="result-view" class="hidden text-center py-4">
       
-      <!-- Icône Trophée Vectorielle (Dégradé Krea) -->
+      <!-- Icône Trophée Vectorielle -->
       <div class="inline-flex p-3.5 mb-3 bg-[#0b0f19] border border-slate-700/80 rounded-2xl shadow-xl shadow-pink-500/10">
         <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="url(#trophyG1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <defs>
@@ -285,6 +293,13 @@
   </footer>
 
   <script>
+    // Enregistrement du Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+
     const CATEGORY_COLORS = {
       'Calques': '#38BDF8', 'Sélection': '#EC4899', 'Affichage': '#10B981',
       'Outils': '#F59E0B', 'Ajustements': '#A855F7', 'Édition': '#6366F1',
@@ -609,10 +624,9 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      // Interception globale des raccourcis système gênants (F5, Cmd+R, Cmd+N, Cmd+T, Cmd+H, Cmd+1 à 9)
+      // Interception globale des raccourcis système
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
       const keyLower = e.key.toLowerCase();
-
       const isDigit = /^[1-9]$/.test(e.key);
 
       if (e.key === 'F5' || (isCmdOrCtrl && (keyLower === 'r' || keyLower === 'n' || keyLower === 't' || keyLower === 'h' || isDigit))) {
