@@ -202,9 +202,9 @@
         </div>
       </div>
 
-      <!-- Clavier virtuel dynamique (Alternative clic pour navigateurs stricts) -->
+      <!-- Clavier virtuel dynamique -->
       <div id="virtual-keyboard" class="flex flex-wrap gap-1.5 justify-center mb-4 p-2 bg-[#0b0f19]/60 rounded-lg border border-slate-800">
-        <!-- Généré dynamiquement selon la question -->
+        <!-- Généré dynamiquement -->
       </div>
 
       <!-- Navigation & Feedback -->
@@ -306,11 +306,11 @@
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer la Baguette magique / Sélection rapide', mac: ['w'], win: ['w'], labelMac: 'W', labelWin: 'W' },
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer l\'outil Plume', mac: ['p'], win: ['p'], labelMac: 'P', labelWin: 'P' },
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer l\'outil Pot de peinture / Dégradé', mac: ['g'], win: ['g'], labelMac: 'G', labelWin: 'G' },
+      { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Activer l\'outil Recadrage', mac: ['c'], win: ['c'], labelMac: 'C', labelWin: 'C' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Annuler la dernière action', mac: ['Meta', 'z'], win: ['Control', 'z'], labelMac: 'Cmd + Z', labelWin: 'Ctrl + Z' },
       { app: 'photoshop', lvl: 1, cat: 'Calques', q: 'Dupliquer le calque sélectionné', mac: ['Meta', 'j'], win: ['Control', 'j'], labelMac: 'Cmd + J', labelWin: 'Ctrl + J' },
       { app: 'photoshop', lvl: 1, cat: 'Sélection', q: 'Désélectionner tout', mac: ['Meta', 'd'], win: ['Control', 'd'], labelMac: 'Cmd + D', labelWin: 'Ctrl + D' },
       { app: 'photoshop', lvl: 1, cat: 'Sélection', q: 'Tout sélectionner', mac: ['Meta', 'a'], win: ['Control', 'a'], labelMac: 'Cmd + A', labelWin: 'Ctrl + A' },
-      { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Afficher / Masquer les règles', mac: ['Meta', 'r'], win: ['Control', 'r'], labelMac: 'Cmd + R', labelWin: 'Ctrl + R' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Enregistrer le document', mac: ['Meta', 's'], win: ['Control', 's'], labelMac: 'Cmd + S', labelWin: 'Ctrl + S' },
       { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Ajuster l\'image à l\'écran', mac: ['Meta', '0'], win: ['Control', '0'], labelMac: 'Cmd + 0', labelWin: 'Ctrl + 0' },
       { app: 'photoshop', lvl: 1, cat: 'Affichage', q: 'Afficher à la taille réelle (Zoom 100%)', mac: ['Meta', '1'], win: ['Control', '1'], labelMac: 'Cmd + 1', labelWin: 'Ctrl + 1' },
@@ -318,7 +318,7 @@
       { app: 'photoshop', lvl: 1, cat: 'Outils', q: 'Réinitialiser les couleurs par défaut (Noir/Blanc)', mac: ['d'], win: ['d'], labelMac: 'D', labelWin: 'D' },
       { app: 'photoshop', lvl: 1, cat: 'Édition', q: 'Activer / Désactiver le Mode Masque rapide', mac: ['q'], win: ['q'], labelMac: 'Q', labelWin: 'Q' },
 
-      // NIV 2 - Intermédiaire (Cmd + T conservé)
+      // NIV 2 - Intermédiaire
       { app: 'photoshop', lvl: 2, cat: 'Outils', q: 'Transformation libre', mac: ['Meta', 't'], win: ['Control', 't'], labelMac: 'Cmd + T', labelWin: 'Ctrl + T' },
       { app: 'photoshop', lvl: 2, cat: 'Calques', q: 'Fusionner les calques sélectionnés', mac: ['Meta', 'e'], win: ['Control', 'e'], labelMac: 'Cmd + E', labelWin: 'Ctrl + E' },
       { app: 'photoshop', lvl: 2, cat: 'Calques', q: 'Créer un nouveau calque', mac: ['Meta', 'Shift', 'N'], win: ['Control', 'Shift', 'N'], labelMac: 'Cmd + Shift + N', labelWin: 'Ctrl + Shift + N' },
@@ -640,7 +640,12 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      // Bloque les raccourcis système / navigateur comme Cmd+T, Cmd+S, Tab, etc.
+      // Bloque la recharge de page (F5, Cmd+R, Ctrl+R) et autres raccourcis système gênants
+      if (e.key === 'F5' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'r')) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
       if (e.metaKey || e.ctrlKey || e.altKey || e.key === 'Tab') {
         e.preventDefault();
         e.stopPropagation();
